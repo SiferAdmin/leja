@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
+import '../main.dart';
+
 class SignInPageWidget extends StatefulWidget {
   const SignInPageWidget({Key? key}) : super(key: key);
 
@@ -309,8 +311,16 @@ class _SignInPageWidgetState extends State<SignInPageWidget> {
                                         const EdgeInsetsDirectional.fromSTEB(
                                             0, 16, 0, 0),
                                     child: ElevatedButton(
-                                      onPressed: () {
+                                      onPressed: () async {
                                         // print('loginButton pressed ...');
+                                        await Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const HomePageWidget(),
+                                          ),
+                                          (r) => false,
+                                        );
                                       },
                                       child: const Text('Login'),
                                     ),
@@ -605,8 +615,16 @@ class _SignInPageWidgetState extends State<SignInPageWidget> {
                                         const EdgeInsetsDirectional.fromSTEB(
                                             0, 20, 0, 0),
                                     child: ElevatedButton(
-                                      onPressed: () {
+                                      onPressed: () async {
                                         // print('loginButton pressed ...');
+                                        await Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const HomePageWidget(),
+                                          ),
+                                          (r) => false,
+                                        );
                                       },
                                       child: const Text('Create Account'),
                                     ),

@@ -277,48 +277,747 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+class HomePageWidget extends StatefulWidget {
+  const HomePageWidget({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  _HomePageWidgetState createState() => _HomePageWidgetState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+class _HomePageWidgetState extends State<HomePageWidget> {
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
+    var brightnes = MediaQuery.of(context).platformBrightness;
+    bool isDark = brightnes == Brightness.dark;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'Home Content',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+      key: scaffoldKey,
+      // backgroundColor: Color(0xFFF5F5F5),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Card(
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          // color: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(40),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                2, 2, 2, 2),
+                            child: Container(
+                              width: 60,
+                              height: 60,
+                              clipBehavior: Clip.antiAlias,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                              ),
+                              child: Image.network(
+                                'https://www.linkpicture.com/q/unknown_user_icon.webp',
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: const [
+                              Text(
+                                'Welcome,',
+                                style: TextStyle(
+                                  fontFamily: 'Lexend Deca',
+                                  // color: const Color(0xFF1E2429),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
+                                child: Text(
+                                  'Jael',
+                                  style: TextStyle(
+                                    fontFamily: 'Lexend Deca',
+                                    // color: const Color(0xFF00968A),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                            child: Text(
+                              'Your latest updates are below.',
+                              style: TextStyle(
+                                fontFamily: 'Lexend Deca',
+                                // color: Color(0xFF090F13),
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.92,
+                  decoration: BoxDecoration(
+                    boxShadow: const [
+                      BoxShadow(
+                        blurRadius: 6,
+                        // color: Color(0x4B1A1F24),
+                        offset: Offset(0, 2),
+                      )
+                    ],
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF00968A), Color(0xFFF2A384)],
+                      stops: [0, 1],
+                      begin: AlignmentDirectional(0.94, -1),
+                      end: AlignmentDirectional(-0.94, 1),
+                    ),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Image.network(
+                              'https://www.linkpicture.com/q/Visa-Logo.png',
+                              width: 44,
+                              height: 14,
+                              fit: BoxFit.cover,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(20, 24, 20, 0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: const [
+                            Text(
+                              'Balance',
+                              style: TextStyle(
+                                fontFamily: 'Lexend Deca',
+                                // color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(20, 8, 20, 0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: const [
+                            Text(
+                              'KSH 7,630',
+                              style: TextStyle(
+                                fontFamily: 'Lexend Deca',
+                                // color: Colors.white,
+                                fontSize: 32,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            20, 12, 20, 16),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            Text(
+                              '****',
+                              style: TextStyle(
+                                fontFamily: 'Lexend Deca',
+                                // color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                            Text(
+                              '05/25',
+                              style: TextStyle(
+                                fontFamily: 'Lexend Deca',
+                                // color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  decoration: const BoxDecoration(
+                    // color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 4,
+                        // color: Color(0x39000000),
+                        offset: Offset(0, -1),
+                      )
+                    ],
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(0),
+                      bottomRight: Radius.circular(0),
+                      topLeft: Radius.circular(16),
+                      topRight: Radius.circular(16),
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(20, 16, 20, 0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: const [
+                            Text(
+                              'Quick Actions',
+                              style: TextStyle(
+                                fontFamily: 'Lexend Deca',
+                                // color: Color(0xFF090F13),
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: 80,
+                              height: 80,
+                              decoration: BoxDecoration(
+                                // color: isDark ? Colors.black : Colors.white,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    blurRadius: 5,
+                                    // color: Color(0x3B000000),
+                                    offset: Offset(0, 2),
+                                  )
+                                ],
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    4, 4, 4, 4),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.swap_horiz_rounded,
+                                      // color:
+                                      //     isDark ? Colors.black : Colors.white,
+                                      size: 40,
+                                    ),
+                                    const Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 8, 0, 0),
+                                      child: Text(
+                                        'Transfer',
+                                        style: TextStyle(
+                                          fontFamily: 'Lexend Deca',
+                                          // color: Color(0xFF090F13),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: 80,
+                              height: 80,
+                              decoration: BoxDecoration(
+                                // color: isDark ? Colors.black : Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 5,
+                                    // color: isDark ? Colors.black : Colors.white,
+                                    offset: Offset(0, 2),
+                                  )
+                                ],
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    4, 4, 4, 4),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.stacked_line_chart_rounded,
+                                      // color:
+                                      //     isDark ? Colors.black : Colors.white,
+                                      size: 40,
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 8, 0, 0),
+                                      child: Text(
+                                        'Activity',
+                                        style: TextStyle(
+                                          fontFamily: 'Lexend Deca',
+                                          // color: Color(0xFF090F13),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: 80,
+                              height: 80,
+                              decoration: BoxDecoration(
+                                // color: isDark ? Colors.black : Colors.white,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    blurRadius: 5,
+                                    // color: Color(0x39000000),
+                                    offset: Offset(0, 2),
+                                  )
+                                ],
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    4, 4, 4, 4),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.account_balance_outlined,
+                                      // color:
+                                      //     isDark ? Colors.black : Colors.white,
+                                      size: 40,
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 8, 0, 0),
+                                      child: Text(
+                                        'My Stock',
+                                        style: TextStyle(
+                                          fontFamily: 'Lexend Deca',
+                                          // color: Color(0xFF090F13),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            20, 12, 20, 12),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: const [
+                            Text(
+                              'Latest Transactions',
+                              style: TextStyle(
+                                fontFamily: 'Lexend Deca',
+                                // color: Color(0xFF090F13),
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.92,
+                        height: 70,
+                        decoration: BoxDecoration(
+                          // color: const Color(0xFFF4F5F7),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  8, 0, 0, 0),
+                              child: Card(
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                // color: const Color(0x6639D2C0),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40),
+                                ),
+                                child: const Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      8, 8, 8, 8),
+                                  child: Icon(
+                                    Icons.monetization_on_rounded,
+                                    // color: Color(0xFF39D2C0),
+                                    size: 24,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    12, 0, 0, 0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: const [
+                                    Text(
+                                      'Hotel A',
+                                      style: TextStyle(
+                                        fontFamily: 'Lexend Deca',
+                                        // color: Color(0xFF1E2429),
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 4, 0, 0),
+                                      child: Text(
+                                        'Income',
+                                        style: TextStyle(
+                                          fontFamily: 'Lexend Deca',
+                                          // color: Color(0xFF090F13),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  12, 0, 12, 0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: const [
+                                  Text(
+                                    'KSH 50.00',
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(
+                                      fontFamily: 'Lexend Deca',
+                                      // color: Color(0xFF39D2C0),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 4, 0, 0),
+                                    child: Text(
+                                      'Detol',
+                                      textAlign: TextAlign.end,
+                                      style: TextStyle(
+                                        fontFamily: 'Lexend Deca',
+                                        // color: Color(0xFF090F13),
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.92,
+                          height: 70,
+                          decoration: BoxDecoration(
+                            // color: const Color(0xFFF4F5F7),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    8, 0, 0, 0),
+                                child: Card(
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  // color: const Color(0x6639D2C0),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(40),
+                                  ),
+                                  child: const Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        8, 8, 8, 8),
+                                    child: Icon(
+                                      Icons.monetization_on_rounded,
+                                      // color: Color(0xFF39D2C0),
+                                      size: 24,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      12, 0, 0, 0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: const [
+                                      Text(
+                                        'Hotel B',
+                                        style: TextStyle(
+                                          fontFamily: 'Lexend Deca',
+                                          // color: Color(0xFF1E2429),
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 4, 0, 0),
+                                        child: Text(
+                                          'Income',
+                                          style: TextStyle(
+                                            fontFamily: 'Lexend Deca',
+                                            // color: Color(0xFF090F13),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    12, 0, 12, 0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: const [
+                                    Text(
+                                      'KSH 50.00',
+                                      textAlign: TextAlign.end,
+                                      style: TextStyle(
+                                        fontFamily: 'Lexend Deca',
+                                        // color: Color(0xFF39D2C0),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 4, 0, 0),
+                                      child: Text(
+                                        'Jik',
+                                        textAlign: TextAlign.end,
+                                        style: TextStyle(
+                                          fontFamily: 'Lexend Deca',
+                                          // color: Color(0xFF090F13),
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 12),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.92,
+                          height: 70,
+                          decoration: BoxDecoration(
+                            // color: const Color(0xFFF4F5F7),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    8, 0, 0, 0),
+                                child: Card(
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  // color: const Color(0x6639D2C0),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(40),
+                                  ),
+                                  child: const Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        8, 8, 8, 8),
+                                    child: Icon(
+                                      Icons.monetization_on_rounded,
+                                      // color: Color.fromARGB(255, 226, 60, 212),
+                                      size: 24,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      12, 0, 0, 0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: const [
+                                      Text(
+                                        'Hotel C',
+                                        style: TextStyle(
+                                          fontFamily: 'Lexend Deca',
+                                          // color: Color(0xFF1E2429),
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 4, 0, 0),
+                                        child: Text(
+                                          'Income',
+                                          style: TextStyle(
+                                            fontFamily: 'Lexend Deca',
+                                            // color: Color(0xFF090F13),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    12, 0, 12, 0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: const [
+                                    Text(
+                                      'KSH 50.00',
+                                      textAlign: TextAlign.end,
+                                      style: TextStyle(
+                                        fontFamily: 'Lexend Deca',
+                                        // color: Color.fromARGB(255, 9, 102, 40),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 4, 0, 0),
+                                      child: Text(
+                                        'Stasoft',
+                                        textAlign: TextAlign.end,
+                                        style: TextStyle(
+                                          fontFamily: 'Lexend Deca',
+                                          // color: Color(0xFF090F13),
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
