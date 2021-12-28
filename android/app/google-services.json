@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "16763316137",
+    "project_id": "leja-c17e0",
+    "storage_bucket": "leja-c17e0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:16763316137:android:6a5d62bb2ccd0e792006b8",
+        "android_client_info": {
+          "package_name": "com.techcuttie.leja"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "16763316137-70tauta7f1ok1cmvj26eceajov8c9b6s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0Hk_ZMFlyDwxyzGCe9ulawauqLfP-xh8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "16763316137-70tauta7f1ok1cmvj26eceajov8c9b6s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
