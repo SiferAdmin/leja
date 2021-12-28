@@ -1,17 +1,19 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/services.dart';
 import 'package:leja/pages/sign_in_page_widget.dart';
-
-void main() {
-  runApp(const MyApp());
-}
 
 var brightness = SchedulerBinding.instance!.window.platformBrightness;
 bool isDarkMode = brightness == Brightness.dark;
-
-//  var brightness = MediaQuery.of(context).platformBrightness;
-//  bool isDarkMode = brightness == Brightness.dark;
+bool isBrightMode = brightness != Brightness.dark;
+void main() {
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.pink,
+      systemNavigationBarContrastEnforced: true,
+      systemNavigationBarColor: Colors.pink));
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -145,7 +147,8 @@ class MyApp extends StatelessWidget {
         //         fontWeight: FontWeight.bold,
         //       )),
         // ),
-        ////////////////////////////////////////////////////////////// LIGHT ***********************
+        // ////////////////////////////////////////////////
+        /////////////// LIGHT ***********************
         primarySwatch: const MaterialColor(4294939347, {
           50: Color(0xffffe5f5),
           100: Color(0xffffccea),
@@ -163,9 +166,9 @@ class MyApp extends StatelessWidget {
         primaryColorLight: const Color(0xffffccea),
         primaryColorDark: const Color(0xff99005b),
         // accentColor: const Color(0xffff0098),/////////////////////////
-        canvasColor: const Color(0xfffafafa),
+        canvasColor: const Color.fromARGB(255, 255, 255, 255),
         scaffoldBackgroundColor: const Color(0xfffafafa),
-        bottomAppBarColor: const Color(0xffffffff),
+        bottomAppBarColor: const Color.fromARGB(255, 255, 255, 255),
         cardColor: const Color(0xffffffff),
         dividerColor: const Color(0x1f000000),
         highlightColor: const Color(0x66bcbcbc),
@@ -514,9 +517,10 @@ class MyApp extends StatelessWidget {
         ),
         tabBarTheme: const TabBarTheme(
           indicatorSize: TabBarIndicatorSize.tab,
-          labelColor: Color(0xffffffff),
-          unselectedLabelColor: Color(0xb2ffffff),
+          labelColor: Color.fromARGB(255, 0, 0, 0),
+          unselectedLabelColor: Color.fromARGB(125, 0, 0, 0),
         ),
+
         chipTheme: const ChipThemeData(
           backgroundColor: Color(0xff607d8b),
           brightness: Brightness.light,
@@ -689,7 +693,7 @@ class MyApp extends StatelessWidget {
         // accentColor: const Color(0xffff92d3),///////////////////////////////////////
         canvasColor: const Color(0xff000000),
         scaffoldBackgroundColor: const Color(0xff000000),
-        bottomAppBarColor: const Color(0xffe91e63),
+        bottomAppBarColor: const Color.fromARGB(255, 0, 0, 0),
         cardColor: const Color(0xff424242),
         dividerColor: const Color(0x1fffffff),
         highlightColor: const Color(0x40cccccc),
@@ -1029,7 +1033,7 @@ class MyApp extends StatelessWidget {
           valueIndicatorColor: Color(0xffe91e63),
           valueIndicatorShape: null,
           showValueIndicator: ShowValueIndicator.never,
-          valueIndicatorTextStyle: const TextStyle(
+          valueIndicatorTextStyle: TextStyle(
             color: Color(0xdd000000),
             fontSize: null,
             fontWeight: FontWeight.w400,
@@ -1099,8 +1103,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     var brightnes = MediaQuery.of(context).platformBrightness;
-    bool isDark = brightnes == Brightness.dark;
     return Scaffold(
       key: scaffoldKey,
       // backgroundColor: Color(0xFFF5F5F5),
@@ -1134,9 +1138,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                               ),
-                              child: Image.network(
-                                'https://www.linkpicture.com/q/unknown_user_icon.webp',
-                              ),
+                              child: CachedNetworkImage(
+                                  imageUrl:
+                                      'https://www.linkpicture.com/q/unknown_user_icon.webp'),
                             ),
                           ),
                         ),
@@ -1224,11 +1228,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            Image.network(
-                              'https://www.linkpicture.com/q/Visa-Logo.png',
-                              width: 44,
-                              height: 14,
-                              fit: BoxFit.cover,
+                            CachedNetworkImage(
+                              imageUrl:
+                                  'https://www.linkpicture.com/q/Visa-Logo.png',
+                              width: 100,
+                              height: 50,
                             ),
                           ],
                         ),
@@ -1303,206 +1307,577 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               ),
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  decoration: const BoxDecoration(
-                    // color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 4,
-                        // color: Color(0x39000000),
-                        offset: Offset(0, -1),
-                      )
-                    ],
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(0),
-                      bottomRight: Radius.circular(0),
-                      topLeft: Radius.circular(16),
-                      topRight: Radius.circular(16),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(20, 16, 20, 0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: const [
+                          Text(
+                            'Quick Actions',
+                            style: TextStyle(
+                              fontFamily: 'Lexend Deca',
+                              // color: Color(0xFF090F13),
+                              fontSize: 14,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(20, 16, 20, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: const [
-                            Text(
-                              'Quick Actions',
-                              style: TextStyle(
-                                fontFamily: 'Lexend Deca',
-                                // color: Color(0xFF090F13),
-                                fontSize: 14,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: 80,
-                              height: 80,
-                              decoration: BoxDecoration(
-                                // color: isDark ? Colors.black : Colors.white,
-                                boxShadow: const [
-                                  BoxShadow(
-                                    blurRadius: 5,
-                                    // color: Color(0x3B000000),
-                                    offset: Offset(0, 2),
-                                  )
-                                ],
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    4, 4, 4, 4),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    Icon(
-                                      Icons.swap_horiz_rounded,
-                                      // color:
-                                      //     isDark ? Colors.black : Colors.white,
-                                      size: 40,
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 8, 0, 0),
-                                      child: Text(
-                                        'Transfer',
-                                        style: TextStyle(
-                                          fontFamily: 'Lexend Deca',
-                                          // color: Color(0xFF090F13),
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.normal,
-                                        ),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Card(
+                            // width: 80,
+                            // height: 80,
+                            // decoration: BoxDecoration(
+                            //   // color: isDark ? Colors.black : Colors.white,
+                            //   boxShadow: const [
+                            //     BoxShadow(
+                            //       blurRadius: 5,
+                            //       // color: Color(0x3B000000),
+                            //       offset: Offset(0, 2),
+                            //     )
+                            //   ],
+                            //   borderRadius: BorderRadius.circular(8),
+                            // ),
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  4, 4, 4, 4),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(
+                                    Icons.swap_horiz_rounded,
+                                    // color:
+                                    //     isDark ? Colors.black : Colors.white,
+                                    size: 40,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 8, 0, 0),
+                                    child: Text(
+                                      'Transfer',
+                                      style: TextStyle(
+                                        fontFamily: 'Lexend Deca',
+                                        // color: Color(0xFF090F13),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
                                       ),
                                     ),
-                                  ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Card(
+                            // width: 80,
+                            // height: 80,
+                            // decoration: BoxDecoration(
+                            //   // color: isDark ? Colors.black : Colors.white,
+                            //   boxShadow: const [
+                            //     BoxShadow(
+                            //       blurRadius: 5,
+                            //       // color: isDark ? Colors.black : Colors.white,
+                            //       offset: Offset(0, 2),
+                            //     )
+                            //   ],
+                            //   borderRadius: BorderRadius.circular(8),
+                            // ),
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  4, 4, 4, 4),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(
+                                    Icons.stacked_line_chart_rounded,
+                                    // color:
+                                    //     isDark ? Colors.black : Colors.white,
+                                    size: 40,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 8, 0, 0),
+                                    child: Text(
+                                      'Activity',
+                                      style: TextStyle(
+                                        fontFamily: 'Lexend Deca',
+                                        // color: Color(0xFF090F13),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Card(
+                            // width: 80,
+                            // height: 80,
+                            // decoration: BoxDecoration(
+                            //   // color: isDark ? Colors.black : Colors.white,
+                            //   boxShadow: const [
+                            //     BoxShadow(
+                            //       blurRadius: 5,
+                            //       // color: Color(0x39000000),
+                            //       offset: Offset(0, 2),
+                            //     )
+                            //   ],
+                            //   borderRadius: BorderRadius.circular(8),
+                            // ),
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  4, 4, 4, 4),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(
+                                    Icons.account_balance_outlined,
+                                    // color:
+                                    //     isDark ? Colors.black : Colors.white,
+                                    size: 40,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 8, 0, 0),
+                                    child: Text(
+                                      'My Stock',
+                                      style: TextStyle(
+                                        fontFamily: 'Lexend Deca',
+                                        // color: Color(0xFF090F13),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Card(
+                            // width: 80,
+                            // height: 80,
+                            // decoration: BoxDecoration(
+                            //   // color: isDark ? Colors.black : Colors.white,
+                            //   boxShadow: const [
+                            //     BoxShadow(
+                            //       blurRadius: 5,
+                            //       // color: Color(0x3B000000),
+                            //       offset: Offset(0, 2),
+                            //     )
+                            //   ],
+                            //   borderRadius: BorderRadius.circular(8),
+                            // ),
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  4, 4, 4, 4),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(
+                                    Icons.swap_horiz_rounded,
+                                    // color:
+                                    //     isDark ? Colors.black : Colors.white,
+                                    size: 40,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 8, 0, 0),
+                                    child: Text(
+                                      'Transfer',
+                                      style: TextStyle(
+                                        fontFamily: 'Lexend Deca',
+                                        // color: Color(0xFF090F13),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Card(
+                            // width: 80,
+                            // height: 80,
+                            // decoration: BoxDecoration(
+                            //   // color: isDark ? Colors.black : Colors.white,
+                            //   boxShadow: const [
+                            //     BoxShadow(
+                            //       blurRadius: 5,
+                            //       // color: isDark ? Colors.black : Colors.white,
+                            //       offset: Offset(0, 2),
+                            //     )
+                            //   ],
+                            //   borderRadius: BorderRadius.circular(8),
+                            // ),
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  4, 4, 4, 4),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(
+                                    Icons.stacked_line_chart_rounded,
+                                    // color:
+                                    //     isDark ? Colors.black : Colors.white,
+                                    size: 40,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 8, 0, 0),
+                                    child: Text(
+                                      'Activity',
+                                      style: TextStyle(
+                                        fontFamily: 'Lexend Deca',
+                                        // color: Color(0xFF090F13),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Card(
+                            // width: 80,
+                            // height: 80,
+                            // decoration: BoxDecoration(
+                            //   // color: isDark ? Colors.black : Colors.white,
+                            //   boxShadow: const [
+                            //     BoxShadow(
+                            //       blurRadius: 5,
+                            //       // color: Color(0x39000000),
+                            //       offset: Offset(0, 2),
+                            //     )
+                            //   ],
+                            //   borderRadius: BorderRadius.circular(8),
+                            // ),
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  4, 4, 4, 4),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(
+                                    Icons.account_balance_outlined,
+                                    // color:
+                                    //     isDark ? Colors.black : Colors.white,
+                                    size: 40,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 8, 0, 0),
+                                    child: Text(
+                                      'My Stock',
+                                      style: TextStyle(
+                                        fontFamily: 'Lexend Deca',
+                                        // color: Color(0xFF090F13),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Card(
+                            // width: 80,
+                            // height: 80,
+                            // decoration: BoxDecoration(
+                            //   // color: isDark ? Colors.black : Colors.white,
+                            //   boxShadow: const [
+                            //     BoxShadow(
+                            //       blurRadius: 5,
+                            //       // color: Color(0x3B000000),
+                            //       offset: Offset(0, 2),
+                            //     )
+                            //   ],
+                            //   borderRadius: BorderRadius.circular(8),
+                            // ),
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  4, 4, 4, 4),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(
+                                    Icons.swap_horiz_rounded,
+                                    // color:
+                                    //     isDark ? Colors.black : Colors.white,
+                                    size: 40,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 8, 0, 0),
+                                    child: Text(
+                                      'Transfer',
+                                      style: TextStyle(
+                                        fontFamily: 'Lexend Deca',
+                                        // color: Color(0xFF090F13),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Card(
+                            // width: 80,
+                            // height: 80,
+                            // decoration: BoxDecoration(
+                            //   // color: isDark ? Colors.black : Colors.white,
+                            //   boxShadow: const [
+                            //     BoxShadow(
+                            //       blurRadius: 5,
+                            //       // color: isDark ? Colors.black : Colors.white,
+                            //       offset: Offset(0, 2),
+                            //     )
+                            //   ],
+                            //   borderRadius: BorderRadius.circular(8),
+                            // ),
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  4, 4, 4, 4),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(
+                                    Icons.stacked_line_chart_rounded,
+                                    // color:
+                                    //     isDark ? Colors.black : Colors.white,
+                                    size: 40,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 8, 0, 0),
+                                    child: Text(
+                                      'Activity',
+                                      style: TextStyle(
+                                        fontFamily: 'Lexend Deca',
+                                        // color: Color(0xFF090F13),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Card(
+                            // width: 80,
+                            // height: 80,
+                            // decoration: BoxDecoration(
+                            //   // color: isDark ? Colors.black : Colors.white,
+                            //   boxShadow: const [
+                            //     BoxShadow(
+                            //       blurRadius: 5,
+                            //       // color: Color(0x39000000),
+                            //       offset: Offset(0, 2),
+                            //     )
+                            //   ],
+                            //   borderRadius: BorderRadius.circular(8),
+                            // ),
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  4, 4, 4, 4),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(
+                                    Icons.account_balance_outlined,
+                                    // color:
+                                    //     isDark ? Colors.black : Colors.white,
+                                    size: 40,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 8, 0, 0),
+                                    child: Text(
+                                      'My Stock',
+                                      style: TextStyle(
+                                        fontFamily: 'Lexend Deca',
+                                        // color: Color(0xFF090F13),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(20, 12, 20, 12),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: const [
+                          Text(
+                            'Latest Transactions',
+                            style: TextStyle(
+                              fontFamily: 'Lexend Deca',
+                              // color: Color(0xFF090F13),
+                              fontSize: 14,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.92,
+                      height: 70,
+                      decoration: BoxDecoration(
+                        // color: const Color(0xFFF4F5F7),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                8, 0, 0, 0),
+                            child: Card(
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              // color: const Color(0x6639D2C0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(40),
+                              ),
+                              child: const Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                                child: Icon(
+                                  Icons.monetization_on_rounded,
+                                  // color: Color(0xFF39D2C0),
+                                  size: 24,
                                 ),
                               ),
                             ),
-                            Container(
-                              width: 80,
-                              height: 80,
-                              decoration: BoxDecoration(
-                                // color: isDark ? Colors.black : Colors.white,
-                                boxShadow: const [
-                                  BoxShadow(
-                                    blurRadius: 5,
-                                    // color: isDark ? Colors.black : Colors.white,
-                                    offset: Offset(0, 2),
-                                  )
-                                ],
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    4, 4, 4, 4),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    Icon(
-                                      Icons.stacked_line_chart_rounded,
-                                      // color:
-                                      //     isDark ? Colors.black : Colors.white,
-                                      size: 40,
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  12, 0, 0, 0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: const [
+                                  Text(
+                                    'Hotel A',
+                                    style: TextStyle(
+                                      fontFamily: 'Lexend Deca',
+                                      // color: Color(0xFF1E2429),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500,
                                     ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 8, 0, 0),
-                                      child: Text(
-                                        'Activity',
-                                        style: TextStyle(
-                                          fontFamily: 'Lexend Deca',
-                                          // color: Color(0xFF090F13),
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.normal,
-                                        ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 4, 0, 0),
+                                    child: Text(
+                                      'Income',
+                                      style: TextStyle(
+                                        fontFamily: 'Lexend Deca',
+                                        // color: Color(0xFF090F13),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: 80,
-                              height: 80,
-                              decoration: BoxDecoration(
-                                // color: isDark ? Colors.black : Colors.white,
-                                boxShadow: const [
-                                  BoxShadow(
-                                    blurRadius: 5,
-                                    // color: Color(0x39000000),
-                                    offset: Offset(0, 2),
-                                  )
+                                  ),
                                 ],
-                                borderRadius: BorderRadius.circular(8),
                               ),
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    4, 4, 4, 4),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    Icon(
-                                      Icons.account_balance_outlined,
-                                      // color:
-                                      //     isDark ? Colors.black : Colors.white,
-                                      size: 40,
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 8, 0, 0),
-                                      child: Text(
-                                        'My Stock',
-                                        style: TextStyle(
-                                          fontFamily: 'Lexend Deca',
-                                          // color: Color(0xFF090F13),
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                12, 0, 12, 0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: const [
+                                Text(
+                                  'KSH 50.00',
+                                  textAlign: TextAlign.end,
+                                  style: TextStyle(
+                                    fontFamily: 'Lexend Deca',
+                                    // color: Color(0xFF39D2C0),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
-                              ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 4, 0, 0),
+                                  child: Text(
+                                    'Detol',
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(
+                                      fontFamily: 'Lexend Deca',
+                                      // color: Color(0xFF090F13),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            20, 12, 20, 12),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: const [
-                            Text(
-                              'Latest Transactions',
-                              style: TextStyle(
-                                fontFamily: 'Lexend Deca',
-                                // color: Color(0xFF090F13),
-                                fontSize: 14,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+                      child: Container(
                         width: MediaQuery.of(context).size.width * 0.92,
                         height: 70,
                         decoration: BoxDecoration(
@@ -1542,7 +1917,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: const [
                                     Text(
-                                      'Hotel A',
+                                      'Hotel B',
                                       style: TextStyle(
                                         fontFamily: 'Lexend Deca',
                                         // color: Color(0xFF1E2429),
@@ -1589,7 +1964,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0, 4, 0, 0),
                                     child: Text(
-                                      'Detol',
+                                      'Jik',
                                       textAlign: TextAlign.end,
                                       style: TextStyle(
                                         fontFamily: 'Lexend Deca',
@@ -1605,90 +1980,55 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           ],
                         ),
                       ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.92,
-                          height: 70,
-                          decoration: BoxDecoration(
-                            // color: const Color(0xFFF4F5F7),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    8, 0, 0, 0),
-                                child: Card(
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  // color: const Color(0x6639D2C0),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(40),
-                                  ),
-                                  child: const Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        8, 8, 8, 8),
-                                    child: Icon(
-                                      Icons.monetization_on_rounded,
-                                      // color: Color(0xFF39D2C0),
-                                      size: 24,
-                                    ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 12),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.92,
+                        height: 70,
+                        decoration: BoxDecoration(
+                          // color: const Color(0xFFF4F5F7),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  8, 0, 0, 0),
+                              child: Card(
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                // color: const Color(0x6639D2C0),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40),
+                                ),
+                                child: const Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      8, 8, 8, 8),
+                                  child: Icon(
+                                    Icons.monetization_on_rounded,
+                                    // color: Color.fromARGB(255, 226, 60, 212),
+                                    size: 24,
                                   ),
                                 ),
                               ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      12, 0, 0, 0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: const [
-                                      Text(
-                                        'Hotel B',
-                                        style: TextStyle(
-                                          fontFamily: 'Lexend Deca',
-                                          // color: Color(0xFF1E2429),
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 4, 0, 0),
-                                        child: Text(
-                                          'Income',
-                                          style: TextStyle(
-                                            fontFamily: 'Lexend Deca',
-                                            // color: Color(0xFF090F13),
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Padding(
+                            ),
+                            Expanded(
+                              child: Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    12, 0, 12, 0),
+                                    12, 0, 0, 0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: const [
                                     Text(
-                                      'KSH 50.00',
-                                      textAlign: TextAlign.end,
+                                      'Hotel C',
                                       style: TextStyle(
                                         fontFamily: 'Lexend Deca',
-                                        // color: Color(0xFF39D2C0),
-                                        fontSize: 16,
+                                        // color: Color(0xFF1E2429),
+                                        fontSize: 18,
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
@@ -1696,12 +2036,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0, 4, 0, 0),
                                       child: Text(
-                                        'Jik',
-                                        textAlign: TextAlign.end,
+                                        'Income',
                                         style: TextStyle(
                                           fontFamily: 'Lexend Deca',
                                           // color: Color(0xFF090F13),
-                                          fontSize: 12,
+                                          fontSize: 14,
                                           fontWeight: FontWeight.normal,
                                         ),
                                       ),
@@ -1709,120 +2048,47 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   ],
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 12),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.92,
-                          height: 70,
-                          decoration: BoxDecoration(
-                            // color: const Color(0xFFF4F5F7),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    8, 0, 0, 0),
-                                child: Card(
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  // color: const Color(0x6639D2C0),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(40),
-                                  ),
-                                  child: const Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        8, 8, 8, 8),
-                                    child: Icon(
-                                      Icons.monetization_on_rounded,
-                                      // color: Color.fromARGB(255, 226, 60, 212),
-                                      size: 24,
+                            ),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  12, 0, 12, 0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: const [
+                                  Text(
+                                    'KSH 50.00',
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(
+                                      fontFamily: 'Lexend Deca',
+                                      // color: Color.fromARGB(255, 9, 102, 40),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      12, 0, 0, 0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: const [
-                                      Text(
-                                        'Hotel C',
-                                        style: TextStyle(
-                                          fontFamily: 'Lexend Deca',
-                                          // color: Color(0xFF1E2429),
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 4, 0, 0),
-                                        child: Text(
-                                          'Income',
-                                          style: TextStyle(
-                                            fontFamily: 'Lexend Deca',
-                                            // color: Color(0xFF090F13),
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    12, 0, 12, 0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: const [
-                                    Text(
-                                      'KSH 50.00',
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 4, 0, 0),
+                                    child: Text(
+                                      'Stasoft',
                                       textAlign: TextAlign.end,
                                       style: TextStyle(
                                         fontFamily: 'Lexend Deca',
-                                        // color: Color.fromARGB(255, 9, 102, 40),
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
+                                        // color: Color(0xFF090F13),
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.normal,
                                       ),
                                     ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 4, 0, 0),
-                                      child: Text(
-                                        'Stasoft',
-                                        textAlign: TextAlign.end,
-                                        style: TextStyle(
-                                          fontFamily: 'Lexend Deca',
-                                          // color: Color(0xFF090F13),
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ],
