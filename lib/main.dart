@@ -559,14 +559,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
+                                  children: const [
                                     Icon(
                                       Icons.swap_horiz_rounded,
                                       // color:
                                       //     isDark ? Colors.black : Colors.white,
                                       size: 40,
                                     ),
-                                    const Padding(
+                                    Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0, 8, 0, 0),
                                       child: Text(
@@ -588,7 +588,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               height: 80,
                               decoration: BoxDecoration(
                                 // color: isDark ? Colors.black : Colors.white,
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                     blurRadius: 5,
                                     // color: isDark ? Colors.black : Colors.white,
@@ -603,7 +603,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
+                                  children: const [
                                     Icon(
                                       Icons.stacked_line_chart_rounded,
                                       // color:
@@ -647,7 +647,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
+                                  children: const [
                                     Icon(
                                       Icons.account_balance_outlined,
                                       // color:
