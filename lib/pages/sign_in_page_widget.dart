@@ -402,6 +402,7 @@ class _SignInPageWidgetState extends State<SignInPageWidget> {
                                           child: ElevatedButton(
                                             onPressed: () async {
                                               // setState(() {});
+                                              print(1.1);
                                               if (_formKey.currentState!
                                                   .validate()) {
                                                 Future<UserCredential> user =
@@ -413,6 +414,7 @@ class _SignInPageWidgetState extends State<SignInPageWidget> {
                                                       loginPasswordController
                                                           .text,
                                                 );
+                                                print(1.2);
 
                                                 // setState(() {});
 
@@ -426,6 +428,7 @@ class _SignInPageWidgetState extends State<SignInPageWidget> {
                                                     ),
                                                     ModalRoute.withName('/'),
                                                   );
+                                                  print(1.3);
                                                 } else {
                                                   showDialog(
                                                     context: context,
