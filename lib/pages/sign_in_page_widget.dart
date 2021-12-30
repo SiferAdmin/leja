@@ -114,6 +114,8 @@ class _SignInPageWidgetState extends State<SignInPageWidget> {
                             PageTransition(
                               type: PageTransitionType.fade,
                               child: CachedNetworkImage(
+                                  height: 80,
+                                  width: 140,
                                   errorWidget: (context, url, error) =>
                                       const Icon(Icons.error),
                                   progressIndicatorBuilder:

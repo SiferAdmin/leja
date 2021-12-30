@@ -4,20 +4,34 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:leja/pages/profile_page.dart';
 import 'package:leja/pages/sign_in_page_widget.dart';
 
-var brightness = SchedulerBinding.instance!.window.platformBrightness;
-bool isDarkMode = brightness == Brightness.dark;
-bool isBrightMode = brightness != Brightness.dark;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   FirebaseFirestore.instance.settings = const Settings(
       persistenceEnabled: true, cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED);
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.pink,
+  var brightness = SchedulerBinding.instance!.window.platformBrightness;
+  bool isDarkMode = brightness == Brightness.dark;
+  bool isBrightMode = brightness != Brightness.dark;
+  final Brightness bright =
+      WidgetsBinding.instance!.platformDispatcher.platformBrightness;
+  @override
+  var window = WidgetsBinding.instance!.window;
+
+  // This callback is called every time the brightness changes.
+  window.onPlatformBrightnessChanged = () {
+    var brightness = window.platformBrightness;
+  };
+
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor:
+          bright == Brightness.light ? const Color(0xFFF687D4) : Colors.pink,
       systemNavigationBarContrastEnforced: true,
-      systemNavigationBarColor: Colors.pink));
+      systemNavigationBarColor:
+          bright == Brightness.light ? const Color(0xFFF687D4) : Colors.pink));
+
   runApp(const MyApp());
 }
 
@@ -1132,45 +1146,55 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Card(
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            // color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(40),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  2, 2, 2, 2),
-                              child: Container(
-                                width: 60,
-                                height: 60,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
+                          InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => const ProfilePage(),
                                 ),
-                                child: CachedNetworkImage(
-                                    errorWidget: (context, url, error) =>
-                                        const Icon(Icons.error),
-                                    progressIndicatorBuilder: (context, url,
-                                            downloadProgress) =>
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: SizedBox(
-                                            height: 10,
-                                            width: 10,
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(14.0),
-                                              child: CircularProgressIndicator(
-                                                strokeWidth: 2,
-                                                value:
-                                                    downloadProgress.progress,
+                              );
+                            },
+                            child: Card(
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              // color: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(40),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    2, 2, 2, 2),
+                                child: Container(
+                                  width: 60,
+                                  height: 60,
+                                  clipBehavior: Clip.antiAlias,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: CachedNetworkImage(
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(Icons.error),
+                                      progressIndicatorBuilder: (context, url,
+                                              downloadProgress) =>
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: SizedBox(
+                                              height: 10,
+                                              width: 10,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(14.0),
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  strokeWidth: 2,
+                                                  value:
+                                                      downloadProgress.progress,
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                    imageUrl:
-                                        'https://www.linkpicture.com/q/unknown_user_icon.webp'),
+                                      imageUrl:
+                                          'https://www.linkpicture.com/q/unknown_user_icon.webp'),
+                                ),
                               ),
                             ),
                           ),
@@ -1900,7 +1924,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: const [
                             Text(
-                              'Latest Transactions',
+                              'Recent Activity',
                               style: TextStyle(
                                 fontFamily: 'Lexend Deca',
                                 // color: Color(0xFF090F13),

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:leja/pages/explainer_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -141,8 +142,8 @@ class ProfilePageState extends State<ProfilePage> {
                                     imageUrl:
                                         'https://www.linkpicture.com/q/leja_banner.png',
                                     width: MediaQuery.of(context).size.width,
-                                    height: 150,
-                                    fit: BoxFit.cover,
+                                    height: 200,
+                                    fit: BoxFit.contain,
                                   ),
                                 ),
                                 Align(
@@ -247,38 +248,47 @@ class ProfilePageState extends State<ProfilePage> {
                           width: 1,
                         ),
                       ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: const [
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                            child: Icon(Icons.arrow_left_sharp,
-                                // color: Color.fromARGB(255, 226, 60, 212),
-                                size: 24),
-                          ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                            child: Text(
-                              'Order History',
-                              style: TextStyle(
-                                fontFamily: 'Lexend Deca',
-                                // color: Color(0xFF090F13),
-                                fontSize: 14,
-                                fontWeight: FontWeight.normal,
-                              ),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const Explainer(),
                             ),
-                          ),
-                          Expanded(
-                            child: Align(
-                              alignment: AlignmentDirectional(0.9, 0),
+                          );
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: const [
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
                               child: Icon(Icons.arrow_left_sharp,
                                   // color: Color.fromARGB(255, 226, 60, 212),
                                   size: 24),
                             ),
-                          ),
-                        ],
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                              child: Text(
+                                'App Explainer',
+                                style: TextStyle(
+                                  fontFamily: 'Lexend Deca',
+                                  // color: Color(0xFF090F13),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Align(
+                                alignment: AlignmentDirectional(0.9, 0),
+                                child: Icon(Icons.arrow_left_sharp,
+                                    // color: Color.fromARGB(255, 226, 60, 212),
+                                    size: 24),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
