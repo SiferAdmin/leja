@@ -47,6 +47,7 @@ dependencies:
   intl: ^0.17.0
   font_awesome_flutter: ^9.2.0
   smooth_page_indicator: ^1.0.0+2
+  connectivity_plus: ^2.1.0
 
 dev_dependencies:
   flutter_test:

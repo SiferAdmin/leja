@@ -10,14 +10,14 @@ import 'package:share/share.dart';
 
 import '../utils/validator.dart';
 
-class SignInPageWidget extends StatefulWidget {
-  const SignInPageWidget({Key? key}) : super(key: key);
+class SignIn extends StatefulWidget {
+  const SignIn({Key? key}) : super(key: key);
 
   @override
-  _SignInPageWidgetState createState() => _SignInPageWidgetState();
+  SignInState createState() => SignInState();
 }
 
-class _SignInPageWidgetState extends State<SignInPageWidget> {
+class SignInState extends State<SignIn> {
   Future<FirebaseApp> _initializeFirebase() async {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
 
@@ -37,6 +37,7 @@ class _SignInPageWidgetState extends State<SignInPageWidget> {
   FirebaseAuth auth = FirebaseAuth.instance;
 
   final _formKey = GlobalKey<FormState>();
+  final _formKey1 = GlobalKey<FormState>();
 
   late TextEditingController confirmPasswordController;
   late bool confirmPasswordVisibility;
@@ -179,300 +180,339 @@ class _SignInPageWidgetState extends State<SignInPageWidget> {
                                     // color: isDark ? Colors.black : Colors.white,
                                     ),
                                 child: SingleChildScrollView(
-                                  child: Form(
-                                    key: _formKey,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(24, 24, 20, 0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: const [
-                                              Text(
-                                                'Login',
-                                                style: TextStyle(
-                                                  fontFamily: 'Lexend Deca',
-                                                  // color: Colors.black,
-                                                  fontSize: 24,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(24, 24, 20, 0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: const [
+                                            Text(
+                                              'Login',
+                                              style: TextStyle(
+                                                fontFamily: 'Lexend Deca',
+                                                // color: Colors.black,
+                                                fontSize: 24,
+                                                fontWeight: FontWeight.bold,
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(24, 4, 20, 0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: const [
-                                              Text(
-                                                'Enter your details to continue.',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  fontFamily: 'Lexend Deca',
-                                                  // color: Colors.black,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.normal,
-                                                ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(24, 4, 20, 0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: const [
+                                            Text(
+                                              'Enter your details to continue.',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontFamily: 'Lexend Deca',
+                                                // color: Colors.black,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.normal,
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(20, 16, 20, 0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Expanded(
-                                                child: TextFormField(
-                                                  key: const ValueKey('email'),
-                                                  // focusNode: _focusEmail,
-                                                  validator: (value) =>
-                                                      Validator.validateEmail(
-                                                    email: value,
-                                                  ),
-                                                  onSaved: (value) {
-                                                    setState(() {
-                                                      email = value!;
-                                                    });
-                                                  },
-                                                  controller:
-                                                      loginEmailAddressController,
-                                                  obscureText: false,
-                                                  decoration: InputDecoration(
-                                                    labelText: 'Email Address',
-                                                    labelStyle: const TextStyle(
-                                                      fontFamily: 'Lexend Deca',
-                                                      // color: Color(0xFF95A1AC),
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.normal,
-                                                    ),
-                                                    hintText:
-                                                        'Enter your email here...',
-                                                    hintStyle: const TextStyle(
-                                                      fontFamily: 'Lexend Deca',
-                                                      // color: Color(0xFF95A1AC),
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.normal,
-                                                    ),
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide:
-                                                          const BorderSide(
-                                                        // color: Color(0xFFDBE2E7),
-                                                        width: 2,
+                                      ),
+                                      Form(
+                                        key: _formKey,
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(20, 16, 20, 0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Expanded(
+                                                    child: TextFormField(
+                                                      key: const ValueKey(
+                                                          'email'),
+                                                      // focusNode: _focusEmail,
+                                                      validator: (value) =>
+                                                          Validator
+                                                              .validateEmail(
+                                                        email: value,
                                                       ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                    ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide:
-                                                          const BorderSide(
-                                                        // color: Color(0xFFDBE2E7),
-                                                        width: 2,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                    ),
-                                                    filled: true,
-                                                    // fillColor: Colors.white,
-                                                  ),
-                                                  style: const TextStyle(
-                                                    fontFamily: 'Lexend Deca',
-                                                    // color: Color(0xFF2B343A),
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(20, 16, 20, 0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Expanded(
-                                                child: TextFormField(
-                                                  key: const ValueKey(
-                                                      'password'),
-                                                  // focusNode:
-                                                  //     _focusPassword,
-                                                  validator: (value) =>
-                                                      Validator
-                                                          .validatePassword(
-                                                    password: value,
-                                                  ),
-                                                  controller:
-                                                      loginPasswordController,
-                                                  obscureText:
-                                                      !loginPasswordVisibility,
-                                                  decoration: InputDecoration(
-                                                    labelText: 'Password',
-                                                    labelStyle: const TextStyle(
-                                                      fontFamily: 'Lexend Deca',
-                                                      // color: Color(0xFF95A1AC),
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.normal,
-                                                    ),
-                                                    hintText:
-                                                        'Enter your email here...',
-                                                    hintStyle: const TextStyle(
-                                                      fontFamily: 'Lexend Deca',
-                                                      // color: Color(0xFF95A1AC),
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.normal,
-                                                    ),
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide:
-                                                          const BorderSide(
-                                                        // color: Color(0xFFDBE2E7),
-                                                        width: 2,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                    ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide:
-                                                          const BorderSide(
-                                                        // color: Color(0xFFDBE2E7),
-                                                        width: 2,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                    ),
-                                                    filled: true,
-                                                    // fillColor: Colors.white,
-                                                    suffixIcon: InkWell(
-                                                      onTap: () => setState(
-                                                        () => loginPasswordVisibility =
-                                                            !loginPasswordVisibility,
-                                                      ),
-                                                      child: Icon(
-                                                        loginPasswordVisibility
-                                                            ? Icons
-                                                                .visibility_outlined
-                                                            : Icons
-                                                                .visibility_off_outlined,
-                                                        // color:
-                                                        //     const Color(0xFF95A1AC),
-                                                        size: 22,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  style: const TextStyle(
-                                                    fontFamily: 'Lexend Deca',
-                                                    // color: Color(0xFF2B343A),
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(0, 16, 0, 0),
-                                          child: ElevatedButton(
-                                            onPressed: () async {
-                                              // setState(() {});
-                                              print(1.1);
-                                              if (_formKey.currentState!
-                                                  .validate()) {
-                                                Future<UserCredential> user =
-                                                    FirebaseAuth.instance
-                                                        .signInWithEmailAndPassword(
-                                                  email: createEmailController
-                                                      .text,
-                                                  password:
-                                                      loginPasswordController
-                                                          .text,
-                                                );
-                                                print(1.2);
-
-                                                // setState(() {});
-
-                                                // ignore: unnecessary_null_comparison
-                                                if (user != null) {
-                                                  Navigator.of(context)
-                                                      .pushAndRemoveUntil(
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const HomePageWidget(),
-                                                    ),
-                                                    ModalRoute.withName('/'),
-                                                  );
-                                                  print(1.3);
-                                                } else {
-                                                  showDialog(
-                                                    context: context,
-                                                    builder:
-                                                        (alertDialogContext) {
-                                                      return AlertDialog(
-                                                        title: const Text(
-                                                            'Your Sign In failed'),
-                                                        content: const Text(
-                                                            'Please enter your correct password and email again or Sign Up for a new account if you dont have one.'),
-                                                        actions: [
-                                                          TextButton(
-                                                            onPressed: () =>
-                                                                Navigator.pop(
-                                                                    alertDialogContext),
-                                                            child: const Text(
-                                                                'Try Again'),
+                                                      onSaved: (value) {
+                                                        setState(() {
+                                                          email = value!;
+                                                        });
+                                                      },
+                                                      controller:
+                                                          loginEmailAddressController,
+                                                      obscureText: false,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        labelText:
+                                                            'Email Address',
+                                                        labelStyle:
+                                                            const TextStyle(
+                                                          fontFamily:
+                                                              'Lexend Deca',
+                                                          // color: Color(0xFF95A1AC),
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                                        hintText:
+                                                            'Enter your email here...',
+                                                        hintStyle:
+                                                            const TextStyle(
+                                                          fontFamily:
+                                                              'Lexend Deca',
+                                                          // color: Color(0xFF95A1AC),
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                                        enabledBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              const BorderSide(
+                                                            // color: Color(0xFFDBE2E7),
+                                                            width: 2,
                                                           ),
-                                                        ],
-                                                      );
-                                                    },
-                                                  );
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                        ),
+                                                        focusedBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              const BorderSide(
+                                                            // color: Color(0xFFDBE2E7),
+                                                            width: 2,
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                        ),
+                                                        filled: true,
+                                                        // fillColor: Colors.white,
+                                                      ),
+                                                      style: const TextStyle(
+                                                        fontFamily:
+                                                            'Lexend Deca',
+                                                        // color: Color(0xFF2B343A),
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(20, 16, 20, 0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Expanded(
+                                                    child: TextFormField(
+                                                      key: const ValueKey(
+                                                          'password'),
+                                                      // focusNode:
+                                                      //     _focusPassword,
+                                                      validator: (value) =>
+                                                          Validator
+                                                              .validatePassword(
+                                                        password: value,
+                                                      ),
+                                                      controller:
+                                                          loginPasswordController,
+                                                      obscureText:
+                                                          !loginPasswordVisibility,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        labelText: 'Password',
+                                                        labelStyle:
+                                                            const TextStyle(
+                                                          fontFamily:
+                                                              'Lexend Deca',
+                                                          // color: Color(0xFF95A1AC),
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                                        hintText:
+                                                            'Enter your email here...',
+                                                        hintStyle:
+                                                            const TextStyle(
+                                                          fontFamily:
+                                                              'Lexend Deca',
+                                                          // color: Color(0xFF95A1AC),
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                                        enabledBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              const BorderSide(
+                                                            // color: Color(0xFFDBE2E7),
+                                                            width: 2,
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                        ),
+                                                        focusedBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              const BorderSide(
+                                                            // color: Color(0xFFDBE2E7),
+                                                            width: 2,
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                        ),
+                                                        filled: true,
+                                                        // fillColor: Colors.white,
+                                                        suffixIcon: InkWell(
+                                                          onTap: () => setState(
+                                                            () => loginPasswordVisibility =
+                                                                !loginPasswordVisibility,
+                                                          ),
+                                                          child: Icon(
+                                                            loginPasswordVisibility
+                                                                ? Icons
+                                                                    .visibility_outlined
+                                                                : Icons
+                                                                    .visibility_off_outlined,
+                                                            // color:
+                                                            //     const Color(0xFF95A1AC),
+                                                            size: 22,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      style: const TextStyle(
+                                                        fontFamily:
+                                                            'Lexend Deca',
+                                                        // color: Color(0xFF2B343A),
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 16, 0, 0),
+                                        child: ElevatedButton(
+                                          onPressed: () async {
+                                            // setState(() {});
+                                            print(1.1);
+                                            if (_formKey.currentState!
+                                                .validate()) {
+                                              // Future<UserCredential> user =
+                                              //     FirebaseAuth.instance
+                                              //         .signInWithEmailAndPassword(
+                                              //   email:
+                                              //       createEmailController.text,
+                                              //   password:
+                                              //       loginPasswordController
+                                              //           .text,
+                                              // );
+                                              try {
+                                                UserCredential userCredential =
+                                                    await FirebaseAuth.instance
+                                                        .signInWithEmailAndPassword(
+                                                            email:
+                                                                "barry.allen@example.com",
+                                                            password:
+                                                                "SuperSecretPassword!");
+                                              } on FirebaseAuthException catch (e) {
+                                                if (e.code ==
+                                                    'user-not-found') {
+                                                  print(
+                                                      'No user found for that email.');
+                                                } else if (e.code ==
+                                                    'wrong-password') {
+                                                  print(
+                                                      'Wrong password provided for that user.');
                                                 }
                                               }
-                                            },
-                                            child: const Text('Login'),
-                                          ),
+                                              print(1.2);
+
+                                              // setState(() {});
+                                              Navigator.of(context)
+                                                  .pushAndRemoveUntil(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const HomePageWidget(),
+                                                ),
+                                                ModalRoute.withName('/'),
+                                              );
+
+                                              // ignore: unnecessary_null_comparison
+                                              // if (userCredential != null) {
+
+                                              //   print(1.3);
+                                              // } else {
+                                              //   showDialog(
+                                              //     context: context,
+                                              //     builder:
+                                              //         (alertDialogContext) {
+                                              //       return AlertDialog(
+                                              //         title: const Text(
+                                              //             'Your Sign In failed'),
+                                              //         content: const Text(
+                                              //             'Please enter your correct password and email again or Sign Up for a new account if you dont have one.'),
+                                              //         actions: [
+                                              //           TextButton(
+                                              //             onPressed: () =>
+                                              //                 Navigator.pop(
+                                              //                     alertDialogContext),
+                                              //             child: const Text(
+                                              //                 'Try Again'),
+                                              //           ),
+                                              //         ],
+                                              //       );
+                                              //     },
+                                              //   );
+                                              // }
+                                            }
+                                          },
+                                          child: const Text('Login'),
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(0, 20, 0, 0),
-                                          child: TextButton(
-                                            onPressed: () {
-                                              Share.share(
-                                                  'eddy@techcuttie.com');
-                                            },
-                                            child:
-                                                const Text('Forgot Password'),
-                                          ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 20, 0, 0),
+                                        child: TextButton(
+                                          onPressed: () {
+                                            Share.share('eddy@techcuttie.com');
+                                          },
+                                          child: const Text('Forgot Password'),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -532,236 +572,269 @@ class _SignInPageWidgetState extends State<SignInPageWidget> {
                                           ],
                                         ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(20, 16, 20, 0),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                      Form(
+                                        key: _formKey1,
+                                        child: Column(
                                           children: [
-                                            Expanded(
-                                              child: TextFormField(
-                                                controller:
-                                                    createEmailController,
-                                                obscureText: false,
-                                                decoration: InputDecoration(
-                                                  labelText: 'Email Address',
-                                                  labelStyle: const TextStyle(
-                                                    fontFamily: 'Lexend Deca',
-                                                    // color: Color(0xFF95A1AC),
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                  ),
-                                                  hintText:
-                                                      'Enter your email here...',
-                                                  hintStyle: const TextStyle(
-                                                    fontFamily: 'Lexend Deca',
-                                                    // color: Color(0xFF95A1AC),
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                  ),
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                      // color: Color(0xFFDBE2E7),
-                                                      width: 2,
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(20, 16, 20, 0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Expanded(
+                                                    child: TextFormField(
+                                                      controller:
+                                                          createEmailController,
+                                                      obscureText: false,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        labelText:
+                                                            'Email Address',
+                                                        labelStyle:
+                                                            const TextStyle(
+                                                          fontFamily:
+                                                              'Lexend Deca',
+                                                          // color: Color(0xFF95A1AC),
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                                        hintText:
+                                                            'Enter your email here...',
+                                                        hintStyle:
+                                                            const TextStyle(
+                                                          fontFamily:
+                                                              'Lexend Deca',
+                                                          // color: Color(0xFF95A1AC),
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                                        enabledBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              const BorderSide(
+                                                            // color: Color(0xFFDBE2E7),
+                                                            width: 2,
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                        ),
+                                                        focusedBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              const BorderSide(
+                                                            // color: Color(0xFFDBE2E7),
+                                                            width: 2,
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                        ),
+                                                        filled: true,
+                                                        // fillColor: Colors.white,
+                                                      ),
+                                                      style: const TextStyle(
+                                                        fontFamily:
+                                                            'Lexend Deca',
+                                                        // color: Color(0xFF2B343A),
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
                                                     ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
                                                   ),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                      // color: Color(0xFFDBE2E7),
-                                                      width: 2,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                  filled: true,
-                                                  // fillColor: Colors.white,
-                                                ),
-                                                style: const TextStyle(
-                                                  fontFamily: 'Lexend Deca',
-                                                  // color: Color(0xFF2B343A),
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.normal,
-                                                ),
+                                                ],
                                               ),
                                             ),
-                                          ],
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(20, 16, 20, 0),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Expanded(
-                                              child: TextFormField(
-                                                controller:
-                                                    createPasswordController,
-                                                obscureText:
-                                                    !createPasswordVisibility,
-                                                decoration: InputDecoration(
-                                                  labelText: 'Password',
-                                                  labelStyle: const TextStyle(
-                                                    fontFamily: 'Lexend Deca',
-                                                    // color: Color(0xFF95A1AC),
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                  ),
-                                                  hintText:
-                                                      'Enter your password',
-                                                  hintStyle: const TextStyle(
-                                                    fontFamily: 'Lexend Deca',
-                                                    // color: Color(0xFF95A1AC),
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                  ),
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                      // color: Color(0xFFDBE2E7),
-                                                      width: 2,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                      // color: Color(0xFFDBE2E7),
-                                                      width: 2,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                  filled: true,
-                                                  // fillColor: Colors.white,
-                                                  suffixIcon: InkWell(
-                                                    onTap: () => setState(
-                                                      () => createPasswordVisibility =
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(20, 16, 20, 0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Expanded(
+                                                    child: TextFormField(
+                                                      controller:
+                                                          createPasswordController,
+                                                      obscureText:
                                                           !createPasswordVisibility,
-                                                    ),
-                                                    child: Icon(
-                                                      createPasswordVisibility
-                                                          ? Icons
-                                                              .visibility_outlined
-                                                          : Icons
-                                                              .visibility_off_outlined,
-                                                      // color:
-                                                      //     const Color(0xFF95A1AC),
-                                                      size: 22,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        labelText: 'Password',
+                                                        labelStyle:
+                                                            const TextStyle(
+                                                          fontFamily:
+                                                              'Lexend Deca',
+                                                          // color: Color(0xFF95A1AC),
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                                        hintText:
+                                                            'Enter your password',
+                                                        hintStyle:
+                                                            const TextStyle(
+                                                          fontFamily:
+                                                              'Lexend Deca',
+                                                          // color: Color(0xFF95A1AC),
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                                        enabledBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              const BorderSide(
+                                                            // color: Color(0xFFDBE2E7),
+                                                            width: 2,
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                        ),
+                                                        focusedBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              const BorderSide(
+                                                            // color: Color(0xFFDBE2E7),
+                                                            width: 2,
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                        ),
+                                                        filled: true,
+                                                        // fillColor: Colors.white,
+                                                        suffixIcon: InkWell(
+                                                          onTap: () => setState(
+                                                            () => createPasswordVisibility =
+                                                                !createPasswordVisibility,
+                                                          ),
+                                                          child: Icon(
+                                                            createPasswordVisibility
+                                                                ? Icons
+                                                                    .visibility_outlined
+                                                                : Icons
+                                                                    .visibility_off_outlined,
+                                                            // color:
+                                                            //     const Color(0xFF95A1AC),
+                                                            size: 22,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      style: const TextStyle(
+                                                        fontFamily:
+                                                            'Lexend Deca',
+                                                        // color: Color(0xFF2B343A),
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                                style: const TextStyle(
-                                                  fontFamily: 'Lexend Deca',
-                                                  // color: Color(0xFF2B343A),
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.normal,
-                                                ),
+                                                ],
                                               ),
                                             ),
-                                          ],
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(20, 16, 20, 0),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Expanded(
-                                              child: TextFormField(
-                                                controller:
-                                                    confirmPasswordController,
-                                                obscureText:
-                                                    !confirmPasswordVisibility,
-                                                decoration: InputDecoration(
-                                                  labelText: 'Confirm Password',
-                                                  labelStyle: const TextStyle(
-                                                    fontFamily: 'Lexend Deca',
-                                                    // color: Color(0xFF95A1AC),
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                  ),
-                                                  hintText:
-                                                      'Enter the same password as above.',
-                                                  hintStyle: const TextStyle(
-                                                    fontFamily: 'Lexend Deca',
-                                                    // color: Color(0xFF95A1AC),
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                  ),
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                      // color: Color(0xFFDBE2E7),
-                                                      width: 2,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                      // color: Color(0xFFDBE2E7),
-                                                      width: 2,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                  filled: true,
-                                                  // fillColor: Colors.white,
-                                                  suffixIcon: InkWell(
-                                                    onTap: () => setState(
-                                                      () => confirmPasswordVisibility =
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(20, 16, 20, 0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Expanded(
+                                                    child: TextFormField(
+                                                      controller:
+                                                          confirmPasswordController,
+                                                      obscureText:
                                                           !confirmPasswordVisibility,
-                                                    ),
-                                                    child: Icon(
-                                                      confirmPasswordVisibility
-                                                          ? Icons
-                                                              .visibility_outlined
-                                                          : Icons
-                                                              .visibility_off_outlined,
-                                                      // color:
-                                                      //     const Color(0xFF95A1AC),
-                                                      size: 22,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        labelText:
+                                                            'Confirm Password',
+                                                        labelStyle:
+                                                            const TextStyle(
+                                                          fontFamily:
+                                                              'Lexend Deca',
+                                                          // color: Color(0xFF95A1AC),
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                                        hintText:
+                                                            'Enter the same password as above.',
+                                                        hintStyle:
+                                                            const TextStyle(
+                                                          fontFamily:
+                                                              'Lexend Deca',
+                                                          // color: Color(0xFF95A1AC),
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                                        enabledBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              const BorderSide(
+                                                            // color: Color(0xFFDBE2E7),
+                                                            width: 2,
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                        ),
+                                                        focusedBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              const BorderSide(
+                                                            // color: Color(0xFFDBE2E7),
+                                                            width: 2,
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                        ),
+                                                        filled: true,
+                                                        // fillColor: Colors.white,
+                                                        suffixIcon: InkWell(
+                                                          onTap: () => setState(
+                                                            () => confirmPasswordVisibility =
+                                                                !confirmPasswordVisibility,
+                                                          ),
+                                                          child: Icon(
+                                                            confirmPasswordVisibility
+                                                                ? Icons
+                                                                    .visibility_outlined
+                                                                : Icons
+                                                                    .visibility_off_outlined,
+                                                            // color:
+                                                            //     const Color(0xFF95A1AC),
+                                                            size: 22,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      style: const TextStyle(
+                                                        fontFamily:
+                                                            'Lexend Deca',
+                                                        // color: Color(0xFF2B343A),
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                                style: const TextStyle(
-                                                  fontFamily: 'Lexend Deca',
-                                                  // color: Color(0xFF2B343A),
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.normal,
-                                                ),
+                                                ],
                                               ),
                                             ),
                                           ],
@@ -773,17 +846,43 @@ class _SignInPageWidgetState extends State<SignInPageWidget> {
                                         child: ElevatedButton(
                                           onPressed: () async {
                                             print(1);
-                                            if (_formKey.currentState!
+
+                                            if (_formKey1.currentState!
                                                 .validate()) {
-                                              Future<UserCredential> user =
-                                                  FirebaseAuth.instance
-                                                      .createUserWithEmailAndPassword(
-                                                email:
-                                                    createEmailController.text,
-                                                password:
-                                                    loginPasswordController
-                                                        .text,
-                                              );
+                                              // Future<UserCredential> user =
+                                              //     FirebaseAuth.instance
+                                              //         .createUserWithEmailAndPassword(
+                                              //   email:
+                                              //       createEmailController.text,
+                                              //   password:
+                                              //       loginPasswordController
+                                              //           .text,
+                                              // );print(1)
+                                              print(111111111);
+                                              try {
+                                                UserCredential userCredential =
+                                                    await FirebaseAuth.instance
+                                                        .createUserWithEmailAndPassword(
+                                                            email:
+                                                                "arry.allen@example.com",
+                                                            password:
+                                                                "SuperSecretPassword!");
+                                                print(2222222);
+                                              } on FirebaseAuthException catch (e) {
+                                                if (e.code == 'weak-password') {
+                                                  print(
+                                                      'The password provided is too weak.');
+                                                } else if (e.code ==
+                                                    'email-already-in-use') {
+                                                  print(
+                                                      'The account already exists for that email.');
+                                                }
+                                              } catch (e) {
+                                                print(e);
+                                              }
+
+                                              print(3333);
+
                                               print(2);
                                               final DateFormat formatter =
                                                   DateFormat('dd/MM/yyyy');
@@ -795,13 +894,13 @@ class _SignInPageWidgetState extends State<SignInPageWidget> {
                                               print(5);
                                               FirebaseFirestore.instance
                                                   .collection('UserData')
-                                                  .doc(userId)
+                                                  .doc('userId')
                                                   .set({
                                                 "email":
-                                                    createEmailController.text,
-                                                "name": name,
-                                                "key": loginPasswordController
-                                                    .text,
+                                                    'createEmailController.text',
+                                                "name": 'name',
+                                                "key":
+                                                    'loginPasswordController',
                                                 "middle_name": '',
                                                 "first_name": '',
                                                 "last_name": '',

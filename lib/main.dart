@@ -1,5 +1,10 @@
+import 'dart:async';
+import 'dart:developer' as developer;
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -7,9 +12,11 @@ import 'package:flutter/services.dart';
 import 'package:leja/pages/profile_page.dart';
 import 'package:leja/pages/sign_in_page_widget.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
   await Firebase.initializeApp();
+  FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore.instance.settings = const Settings(
       persistenceEnabled: true, cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED);
   var brightness = SchedulerBinding.instance!.window.platformBrightness;
@@ -41,7 +48,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Leja',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'Lexend Deca',
@@ -1109,7 +1116,7 @@ class MyApp extends StatelessWidget {
         )),
       ),
       themeMode: ThemeMode.system,
-      home: const SignInPageWidget(),
+      home: const SignIn(),
     );
   }
 }
@@ -1123,11 +1130,71 @@ class HomePageWidget extends StatefulWidget {
 
 class _HomePageWidgetState extends State<HomePageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    initConnectivity();
+
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+  }
+
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
+  }
+
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> initConnectivity() async {
+    late ConnectivityResult result;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      developer.log('Couldn\'t check connectivity status', error: e);
+      return;
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) {
+      return Future.value(null);
+    }
+
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    setState(() {
+      _connectionStatus = result;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    // @override
+    // initState() {
+    //   super.initState();
+
+    //   var subscription = Connectivity()
+    //       .onConnectivityChanged
+    //       .listen((ConnectivityResult result) {
+    //     // Got a new connectivity status!
+    //   });
+    // }
+
     // ignore: unused_local_variable
     var brightnes = MediaQuery.of(context).platformBrightness;
+    print(
+        '***************************************************************************************************************************');
+    print(_connectionStatus.toString());
+    Center(child: Text('Connection Status: ${_connectionStatus.toString()}'));
     return Scaffold(
       key: scaffoldKey,
       // backgroundColor: Color(0xFFF5F5F5),
@@ -1154,48 +1221,71 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 ),
                               );
                             },
-                            child: Card(
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                              // color: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(40),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    2, 2, 2, 2),
-                                child: Container(
-                                  width: 60,
-                                  height: 60,
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
+                            child: Stack(
+                              alignment: const AlignmentDirectional(
+                                  .9, -0.89999999999999999),
+                              children: [
+                                Card(
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  // color: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(40),
                                   ),
-                                  child: CachedNetworkImage(
-                                      errorWidget: (context, url, error) =>
-                                          const Icon(Icons.error),
-                                      progressIndicatorBuilder: (context, url,
-                                              downloadProgress) =>
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: SizedBox(
-                                              height: 10,
-                                              width: 10,
-                                              child: Padding(
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            2, 2, 2, 2),
+                                    child: Container(
+                                      width: 60,
+                                      height: 60,
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: CachedNetworkImage(
+                                          errorWidget: (context, url, error) =>
+                                              const Icon(Icons.error),
+                                          progressIndicatorBuilder: (context,
+                                                  url, downloadProgress) =>
+                                              Padding(
                                                 padding:
-                                                    const EdgeInsets.all(14.0),
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  strokeWidth: 2,
-                                                  value:
-                                                      downloadProgress.progress,
+                                                    const EdgeInsets.all(8.0),
+                                                child: SizedBox(
+                                                  height: 10,
+                                                  width: 10,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            14.0),
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      strokeWidth: 2,
+                                                      value: downloadProgress
+                                                          .progress,
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                          ),
-                                      imageUrl:
-                                          'https://www.linkpicture.com/q/unknown_user_icon.webp'),
+                                          imageUrl:
+                                              'https://www.linkpicture.com/q/unknown_user_icon.webp'),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(0.5, 1.8),
+                                  child: Container(
+                                    width: 20,
+                                    height: 20,
+                                    decoration: BoxDecoration(
+                                      color: _connectionStatus.toString() ==
+                                              'ConnectivityResult.none'
+                                          ? Colors.red
+                                          : Colors.green,
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                         ],
@@ -1556,7 +1646,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0, 8, 0, 0),
                                       child: Text(
-                                        'Task',
+                                        'Projects',
                                         style: TextStyle(
                                           fontFamily: 'Lexend Deca',
                                           // color: Color(0xFF090F13),
@@ -1665,7 +1755,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: const [
                                     Icon(
-                                      Icons.library_books_sharp,
+                                      Icons.miscellaneous_services_sharp,
                                       // color:
                                       //     isDark ? Colors.black : Colors.white,
                                       size: 40,
@@ -1674,7 +1764,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0, 8, 0, 0),
                                       child: Text(
-                                        'Diary',
+                                        'Vault',
                                         style: TextStyle(
                                           fontFamily: 'Lexend Deca',
                                           // color: Color(0xFF090F13),
