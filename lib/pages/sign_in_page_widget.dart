@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,6 +20,7 @@ class SignIn extends StatefulWidget {
 }
 
 class SignInState extends State<SignIn> {
+  // ignore: unused_element
   Future<FirebaseApp> _initializeFirebase() async {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
 
@@ -115,8 +118,8 @@ class SignInState extends State<SignIn> {
                             PageTransition(
                               type: PageTransitionType.fade,
                               child: CachedNetworkImage(
-                                  height: 80,
-                                  width: 140,
+                                  height: 100,
+                                  width: 160,
                                   errorWidget: (context, url, error) =>
                                       const Icon(Icons.error),
                                   progressIndicatorBuilder:
@@ -136,10 +139,11 @@ class SignInState extends State<SignIn> {
                         child: Hero(
                           tag: 'imageTag',
                           transitionOnUserGestures: true,
-                          child: Image.network(
-                            'https://www.linkpicture.com/q/leja_banner.png',
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                'https://www.linkpicture.com/q/leja_banner.png',
                             width: 250,
-                            height: 38,
+                            height: 58,
                             fit: BoxFit.contain,
                           ),
                         ),
@@ -440,63 +444,110 @@ class SignInState extends State<SignIn> {
                                               //           .text,
                                               // );
                                               try {
+                                                // ignore: unused_local_variable
                                                 UserCredential userCredential =
                                                     await FirebaseAuth.instance
                                                         .signInWithEmailAndPassword(
                                                             email:
-                                                                "barry.allen@example.com",
+                                                                loginEmailAddressController
+                                                                    .text,
                                                             password:
-                                                                "SuperSecretPassword!");
+                                                                loginPasswordController
+                                                                    .text);
                                               } on FirebaseAuthException catch (e) {
+                                                // ignore: duplicate_ignore
                                                 if (e.code ==
                                                     'user-not-found') {
-                                                  print(
-                                                      'No user found for that email.');
+                                                  showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (alertDialogContext) {
+                                                      return AlertDialog(
+                                                        title: const Text(
+                                                            'User Not Found'),
+                                                        content: const Text(
+                                                            'Please enter your correct password and email again or Sign Up for a new account if you dont have one.'),
+                                                        actions: [
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    alertDialogContext),
+                                                            child: const Text(
+                                                                'Try Again'),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
                                                 } else if (e.code ==
                                                     'wrong-password') {
-                                                  print(
-                                                      'Wrong password provided for that user.');
+                                                  showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (alertDialogContext) {
+                                                      return AlertDialog(
+                                                        title: const Text(
+                                                            'Incorrect Password'),
+                                                        content: const Text(
+                                                            'Please enter your correct password and email again.'),
+                                                        actions: [
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    alertDialogContext),
+                                                            child: const Text(
+                                                                'Try Again'),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
                                                 }
                                               }
                                               print(1.2);
 
                                               // setState(() {});
-                                              Navigator.of(context)
-                                                  .pushAndRemoveUntil(
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const HomePageWidget(),
-                                                ),
-                                                ModalRoute.withName('/'),
-                                              );
+                                              if (FirebaseAuth
+                                                      .instance.currentUser !=
+                                                  null) {
+                                                Navigator.of(context)
+                                                    .pushAndRemoveUntil(
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const HomePageWidget(),
+                                                  ),
+                                                  ModalRoute.withName('/'),
+                                                );
+                                              } else {
+                                                showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (alertDialogContext) {
+                                                    return AlertDialog(
+                                                      title: const Text(
+                                                          'Login Error'),
+                                                      content: const Text(
+                                                          'You have entered some incorrect login details please try again'),
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () =>
+                                                              Navigator.pop(
+                                                                  alertDialogContext),
+                                                          child: const Text(
+                                                              'Try Again'),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              }
 
                                               // ignore: unnecessary_null_comparison
                                               // if (userCredential != null) {
 
                                               //   print(1.3);
                                               // } else {
-                                              //   showDialog(
-                                              //     context: context,
-                                              //     builder:
-                                              //         (alertDialogContext) {
-                                              //       return AlertDialog(
-                                              //         title: const Text(
-                                              //             'Your Sign In failed'),
-                                              //         content: const Text(
-                                              //             'Please enter your correct password and email again or Sign Up for a new account if you dont have one.'),
-                                              //         actions: [
-                                              //           TextButton(
-                                              //             onPressed: () =>
-                                              //                 Navigator.pop(
-                                              //                     alertDialogContext),
-                                              //             child: const Text(
-                                              //                 'Try Again'),
-                                              //           ),
-                                              //         ],
-                                              //       );
-                                              //     },
-                                              //   );
-                                              // }
+
                                             }
                                           },
                                           child: const Text('Login'),
@@ -860,22 +911,63 @@ class SignInState extends State<SignIn> {
                                               // );print(1)
                                               print(111111111);
                                               try {
+                                                // ignore: unused_local_variable
                                                 UserCredential userCredential =
                                                     await FirebaseAuth.instance
                                                         .createUserWithEmailAndPassword(
                                                             email:
-                                                                "arry.allen@example.com",
+                                                                createEmailController
+                                                                    .text,
                                                             password:
-                                                                "SuperSecretPassword!");
+                                                                createPasswordController
+                                                                    .text);
                                                 print(2222222);
                                               } on FirebaseAuthException catch (e) {
                                                 if (e.code == 'weak-password') {
-                                                  print(
-                                                      'The password provided is too weak.');
+                                                  showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (alertDialogContext) {
+                                                      return AlertDialog(
+                                                        title: const Text(
+                                                            'Weak Password'),
+                                                        content: const Text(
+                                                            'The password you have entered is too weak'),
+                                                        actions: [
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    alertDialogContext),
+                                                            child: const Text(
+                                                                'Try Again'),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
                                                 } else if (e.code ==
                                                     'email-already-in-use') {
-                                                  print(
-                                                      'The account already exists for that email.');
+                                                  showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (alertDialogContext) {
+                                                      return AlertDialog(
+                                                        title: const Text(
+                                                            'Email is Unavailable'),
+                                                        content: const Text(
+                                                            'The Email you have entered is already taken by another user.'),
+                                                        actions: [
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    alertDialogContext),
+                                                            child: const Text(
+                                                                'Try Again'),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
                                                 }
                                               } catch (e) {
                                                 print(e);
@@ -889,6 +981,7 @@ class SignInState extends State<SignIn> {
                                               String createDate = formatter
                                                   .format(DateTime.now());
                                               print(3);
+                                              // ignore: unused_local_variable
                                               var userId = FirebaseAuth
                                                   .instance.currentUser!.uid;
                                               print(5);
@@ -915,14 +1008,41 @@ class SignInState extends State<SignIn> {
                                               //   _isProcessing = false;
                                               // });
 
-                                              Navigator.of(context)
-                                                  .pushAndRemoveUntil(
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const HomePageWidget(),
-                                                ),
-                                                ModalRoute.withName('/'),
-                                              );
+                                              if (FirebaseAuth
+                                                      .instance.currentUser !=
+                                                  null) {
+                                                Navigator.of(context)
+                                                    .pushAndRemoveUntil(
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const HomePageWidget(),
+                                                  ),
+                                                  ModalRoute.withName('/'),
+                                                );
+                                              } else {
+                                                showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (alertDialogContext) {
+                                                    return AlertDialog(
+                                                      title: const Text(
+                                                          'Account Creation Error'),
+                                                      content: const Text(
+                                                          'You have entered some incorrect account creation details please try again'),
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () =>
+                                                              Navigator.pop(
+                                                                  alertDialogContext),
+                                                          child: const Text(
+                                                              'Try Again'),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              }
+
                                               print(7);
                                             }
                                           },

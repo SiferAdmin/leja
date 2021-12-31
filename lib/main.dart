@@ -4,7 +4,6 @@ import 'dart:developer' as developer;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -14,28 +13,29 @@ import 'package:leja/pages/sign_in_page_widget.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
   await Firebase.initializeApp();
-  FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore.instance.settings = const Settings(
       persistenceEnabled: true, cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED);
   var brightness = SchedulerBinding.instance!.window.platformBrightness;
+  // ignore: unused_local_variable
   bool isDarkMode = brightness == Brightness.dark;
+  // ignore: unused_local_variable
   bool isBrightMode = brightness != Brightness.dark;
   final Brightness bright =
       WidgetsBinding.instance!.platformDispatcher.platformBrightness;
-  @override
-  var window = WidgetsBinding.instance!.window;
+  // @override
+  // var window = WidgetsBinding.instance!.window;
 
   // This callback is called every time the brightness changes.
-  window.onPlatformBrightnessChanged = () {
-    var brightness = window.platformBrightness;
-  };
+  // window.onPlatformBrightnessChanged = () {
+  //   // ignore: unused_local_variable
+  //   var brightness = window.platformBrightness;
+  // };
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor:
           bright == Brightness.light ? const Color(0xFFF687D4) : Colors.pink,
-      systemNavigationBarContrastEnforced: true,
+      // systemNavigationBarContrastEnforced: true,
       systemNavigationBarColor:
           bright == Brightness.light ? const Color(0xFFF687D4) : Colors.pink));
 
@@ -49,6 +49,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Leja',
+      color: Colors.pink,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'Lexend Deca',
@@ -1191,10 +1192,13 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
     // ignore: unused_local_variable
     var brightnes = MediaQuery.of(context).platformBrightness;
+    // ignore: avoid_print
     print(
         '***************************************************************************************************************************');
-    print(_connectionStatus.toString());
+    // ignore: avoid_print
+
     Center(child: Text('Connection Status: ${_connectionStatus.toString()}'));
+    // var user = FirebaseAuth.instance.currentUser;
     return Scaffold(
       key: scaffoldKey,
       // backgroundColor: Color(0xFFF5F5F5),
@@ -1272,6 +1276,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   ),
                                 ),
                                 Align(
+                                  // ignore: prefer_const_constructors
                                   alignment: AlignmentDirectional(0.5, 1.8),
                                   child: Container(
                                     width: 20,

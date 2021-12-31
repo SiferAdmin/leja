@@ -2,16 +2,19 @@ import 'dart:async';
 import 'dart:developer' as developer;
 
 import 'package:cached_network_image/cached_network_image.dart';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'package:leja/pages/edit_profile_page_widget.dart';
 import 'package:leja/pages/explainer_page.dart';
 import 'package:leja/pages/sign_in_page_widget.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   ProfilePageState createState() => ProfilePageState();
@@ -22,6 +25,7 @@ class ProfilePageState extends State<ProfilePage> {
   ConnectivityResult _connectionStatus = ConnectivityResult.none;
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+  late User currentUser;
 
   @override
   void initState() {
@@ -78,6 +82,7 @@ class ProfilePageState extends State<ProfilePage> {
               Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
+                  // ignore: sized_box_for_whitespace
                   Container(
                     width: MediaQuery.of(context).size.width,
                     height: 270,
@@ -93,6 +98,7 @@ class ProfilePageState extends State<ProfilePage> {
                           children: [
                             Expanded(
                               child: Stack(
+                                alignment: const AlignmentDirectional(0, 4),
                                 children: [
                                   Align(
                                     alignment: const AlignmentDirectional(0, 0),
@@ -105,7 +111,8 @@ class ProfilePageState extends State<ProfilePage> {
                                     ),
                                   ),
                                   Stack(
-                                    alignment: const AlignmentDirectional(0, 0),
+                                    alignment:
+                                        const AlignmentDirectional(0, -1),
                                     children: [
                                       Card(
                                         clipBehavior:
@@ -160,8 +167,8 @@ class ProfilePageState extends State<ProfilePage> {
                                         ),
                                       ),
                                       Align(
-                                        alignment:
-                                            AlignmentDirectional(0.5, 1.8),
+                                        alignment: const AlignmentDirectional(
+                                            0.1, 0.2),
                                         child: Container(
                                           width: 20,
                                           height: 20,
@@ -175,14 +182,6 @@ class ProfilePageState extends State<ProfilePage> {
                                           ),
                                         ),
                                       ),
-                                      Align(
-                                        alignment: AlignmentDirectional(0.7, 0),
-                                        child: Icon(
-                                          Icons.edit_rounded,
-                                          // color: Colors.white,
-                                          size: 24,
-                                        ),
-                                      ),
                                     ],
                                   ),
                                 ],
@@ -190,6 +189,7 @@ class ProfilePageState extends State<ProfilePage> {
                             ),
                           ],
                         ),
+                        Spacer(),
                         Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -328,38 +328,47 @@ class ProfilePageState extends State<ProfilePage> {
                             width: 1,
                           ),
                         ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: const [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                              child: Icon(Icons.arrow_left_sharp,
-                                  // color: Color.fromARGB(255, 226, 60, 212),
-                                  size: 24),
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                              child: Text(
-                                'Edit My Profile',
-                                style: TextStyle(
-                                  fontFamily: 'Lexend Deca',
-                                  // color: Color(0xFF090F13),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.normal,
-                                ),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const EditProfile(),
                               ),
-                            ),
-                            Expanded(
-                              child: Align(
-                                alignment: AlignmentDirectional(0.9, 0),
+                            );
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: const [
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
                                 child: Icon(Icons.arrow_left_sharp,
                                     // color: Color.fromARGB(255, 226, 60, 212),
                                     size: 24),
                               ),
-                            ),
-                          ],
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                                child: Text(
+                                  'Edit My Profile',
+                                  style: TextStyle(
+                                    fontFamily: 'Lexend Deca',
+                                    // color: Color(0xFF090F13),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Align(
+                                  alignment: AlignmentDirectional(0.9, 0),
+                                  child: Icon(Icons.arrow_left_sharp,
+                                      // color: Color.fromARGB(255, 226, 60, 212),
+                                      size: 24),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],

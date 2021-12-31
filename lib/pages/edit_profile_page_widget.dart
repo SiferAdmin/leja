@@ -4,20 +4,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:leja/pages/profile_page.dart';
 
-class EditProfilePage extends StatefulWidget {
-  final User user;
-
+class EditProfile extends StatefulWidget {
   static String desk = 'desk';
-  const EditProfilePage({
+  const EditProfile({
     Key? key,
-    required this.user,
   }) : super(key: key);
 
   @override
-  _EditProfilePageState createState() => _EditProfilePageState();
+  EditProfileState createState() => EditProfileState();
 }
 
-class _EditProfilePageState extends State<EditProfilePage> {
+class EditProfileState extends State<EditProfile> {
   late User currentUser;
   // final Stream<QuerySnapshot> users =
   //     FirebaseFirestore.instance.collection('users').snapshots();
@@ -51,7 +48,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   var age = 0;
   @override
   void initState() {
-    currentUser = widget.user;
     super.initState();
   }
 
