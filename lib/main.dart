@@ -767,8 +767,8 @@ class MyApp extends StatelessWidget {
             // primaryVariant: Color(0xff000000),///////////////////////////
             secondary: Color(0xff64ffda),
             // secondaryVariant: Color(0xff00bfa5),/////////////////////////////////////
-            surface: Color(0xff424242),
-            background: Color(0xff616161),
+            surface: Color.fromARGB(255, 173, 58, 58),
+            background: Color.fromARGB(255, 182, 55, 55),
             error: Color(0xffd32f2f),
             onPrimary: Color(0xffffffff),
             onSecondary: Color(0xff000000),
@@ -1201,6 +1201,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     // var user = FirebaseAuth.instance.currentUser;
     return Scaffold(
       key: scaffoldKey,
+      appBar: AppBar(
+        title: const Text('Dashboard'),
+      ),
       // backgroundColor: Color(0xFFF5F5F5),
       body: SafeArea(
         child: Scrollbar(

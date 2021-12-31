@@ -73,6 +73,9 @@ class ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Profile Page'),
+        ),
         key: scaffoldKey,
         body: SingleChildScrollView(
           child: Column(
@@ -220,7 +223,7 @@ class ProfilePageState extends State<ProfilePage> {
                                 'jaelapat@gmail.com',
                                 style: TextStyle(
                                   fontFamily: 'Lexend Deca',
-                                  color: Color(0xFFEE8B60),
+                                  // color: Color(0xFFEE8B60),
                                   fontSize: 14,
                                   fontWeight: FontWeight.normal,
                                 ),
@@ -283,7 +286,7 @@ class ProfilePageState extends State<ProfilePage> {
                               Padding(
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                                child: Icon(Icons.arrow_left_sharp,
+                                child: Icon(Icons.help_center_sharp,
                                     // color: Color.fromARGB(255, 226, 60, 212),
                                     size: 24),
                               ),
@@ -303,7 +306,7 @@ class ProfilePageState extends State<ProfilePage> {
                               Expanded(
                                 child: Align(
                                   alignment: AlignmentDirectional(0.9, 0),
-                                  child: Icon(Icons.arrow_left_sharp,
+                                  child: Icon(Icons.arrow_right_sharp,
                                       // color: Color.fromARGB(255, 226, 60, 212),
                                       size: 24),
                                 ),
@@ -342,7 +345,7 @@ class ProfilePageState extends State<ProfilePage> {
                               Padding(
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                                child: Icon(Icons.arrow_left_sharp,
+                                child: Icon(Icons.mode_edit_sharp,
                                     // color: Color.fromARGB(255, 226, 60, 212),
                                     size: 24),
                               ),
@@ -362,7 +365,7 @@ class ProfilePageState extends State<ProfilePage> {
                               Expanded(
                                 child: Align(
                                   alignment: AlignmentDirectional(0.9, 0),
-                                  child: Icon(Icons.arrow_left_sharp,
+                                  child: Icon(Icons.arrow_right_sharp,
                                       // color: Color.fromARGB(255, 226, 60, 212),
                                       size: 24),
                                 ),
@@ -393,7 +396,7 @@ class ProfilePageState extends State<ProfilePage> {
                             Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                              child: Icon(Icons.arrow_left_sharp,
+                              child: Icon(Icons.settings_applications_sharp,
                                   // color: Color.fromARGB(255, 226, 60, 212),
                                   size: 24),
                             ),
@@ -401,7 +404,7 @@ class ProfilePageState extends State<ProfilePage> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
                               child: Text(
-                                'My Notifications',
+                                'My App Preferences',
                                 style: TextStyle(
                                   fontFamily: 'Lexend Deca',
                                   // color: Color(0xFF090F13),
@@ -413,7 +416,7 @@ class ProfilePageState extends State<ProfilePage> {
                             Expanded(
                               child: Align(
                                 alignment: AlignmentDirectional(0.9, 0),
-                                child: Icon(Icons.arrow_left_sharp,
+                                child: Icon(Icons.arrow_right_sharp,
                                     // color: Color.fromARGB(255, 226, 60, 212),
                                     size: 24),
                               ),
@@ -443,7 +446,7 @@ class ProfilePageState extends State<ProfilePage> {
                             Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                              child: Icon(Icons.arrow_left_sharp,
+                              child: Icon(Icons.feed_sharp,
                                   // color: Color.fromARGB(255, 226, 60, 212),
                                   size: 24),
                             ),
@@ -451,7 +454,7 @@ class ProfilePageState extends State<ProfilePage> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
                               child: Text(
-                                'Terms of Service',
+                                'About',
                                 style: TextStyle(
                                   fontFamily: 'Lexend Deca',
                                   // color: Color(0xFF090F13),
@@ -463,7 +466,7 @@ class ProfilePageState extends State<ProfilePage> {
                             Expanded(
                               child: Align(
                                 alignment: AlignmentDirectional(0.9, 0),
-                                child: Icon(Icons.arrow_left_sharp,
+                                child: Icon(Icons.arrow_right_sharp,
                                     // color: Color.fromARGB(255, 226, 60, 212),
                                     size: 24),
                               ),
