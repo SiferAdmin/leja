@@ -2019,7 +2019,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: const [
                                     Icon(
-                                      Icons.shopping_bag_sharp,
+                                      Icons.eco_sharp,
                                       // color:
                                       //     isDark ? Colors.black : Colors.white,
                                       size: 40,
@@ -2028,7 +2028,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0, 8, 0, 0),
                                       child: Text(
-                                        'Purchase',
+                                        'Income',
                                         style: TextStyle(
                                           fontFamily: 'Lexend Deca',
                                           // color: Color(0xFF090F13),

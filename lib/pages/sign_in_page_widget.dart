@@ -490,6 +490,7 @@ class SignInState extends State<SignIn> {
                                                     try {
                                                       // ignore: unused_local_variable
                                                       UserCredential
+                                                          // ignore: unused_local_variable
                                                           userCredential =
                                                           await FirebaseAuth
                                                               .instance
@@ -1023,6 +1024,7 @@ class SignInState extends State<SignIn> {
                                                     try {
                                                       // ignore: unused_local_variable
                                                       UserCredential
+                                                          // ignore: unused_local_variable
                                                           userCredential =
                                                           await FirebaseAuth
                                                               .instance
