@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:leja/pages/edit_profile_pic.dart';
 import 'package:leja/pages/profile_page.dart';
 
 class EditProfile extends StatefulWidget {
@@ -15,7 +16,6 @@ class EditProfile extends StatefulWidget {
 }
 
 class EditProfileState extends State<EditProfile> {
-  late User currentUser;
   // final Stream<QuerySnapshot> users =
   //     FirebaseFirestore.instance.collection('users').snapshots();
 
@@ -23,17 +23,11 @@ class EditProfileState extends State<EditProfile> {
 
   final controller = TextEditingController();
   final _emailcontroller = TextEditingController();
-  final _aboutcontroller = TextEditingController();
-  final _biocontroller = TextEditingController();
-  final _skillscontroller = TextEditingController();
-  final _hobbiescontroller = TextEditingController();
-  final _coursecontroller = TextEditingController();
   // ignore: unused_field
   final _namedcontroller = TextEditingController();
   // ignore: unused_field
   final _agecontroller = TextEditingController();
   // ignore: non_constant_identifier_names
-  final _registration_numbercontroller = TextEditingController();
   static String name = "";
   static String email = "";
   // ignore: unused_field
@@ -57,7 +51,8 @@ class EditProfileState extends State<EditProfile> {
     CollectionReference loggedUser =
         FirebaseFirestore.instance.collection('UserData');
     // ignore: unused_local_variable
-    var _imagePath = loggedUser.doc(currentUser.email).get();
+    var _imagePath =
+        loggedUser.doc(FirebaseAuth.instance.currentUser!.uid).get();
 
     return Scaffold(
       appBar: AppBar(
@@ -71,7 +66,9 @@ class EditProfileState extends State<EditProfile> {
               Column(
                 children: [
                   FutureBuilder<DocumentSnapshot>(
-                    future: loggedUser.doc(currentUser.email).get(),
+                    future: loggedUser
+                        .doc(FirebaseAuth.instance.currentUser!.uid)
+                        .get(),
                     builder: (BuildContext context,
                         AsyncSnapshot<DocumentSnapshot> snapshot) {
                       if (snapshot.hasError) {
@@ -79,7 +76,7 @@ class EditProfileState extends State<EditProfile> {
                       }
 
                       if (snapshot.hasData && !snapshot.data!.exists) {
-                        return const Text("Document does not exist");
+                        return const Text("Data requested does not exist");
                       }
 
                       if (snapshot.connectionState == ConnectionState.done) {
@@ -117,14 +114,12 @@ class EditProfileState extends State<EditProfile> {
                       Icons.add_a_photo,
                     ),
                     onPressed: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => EditProfilePic(
-                      //       user: currentUser,
-                      //     ),
-                      //   ),
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditProfilePic(),
+                        ),
+                      );
                     },
                   ),
                   // StreamBuilder<QuerySnapshot>(
@@ -210,145 +205,40 @@ class EditProfileState extends State<EditProfile> {
                   ),
                 ],
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Course',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                  Text(course),
-                  TextField(
-                    controller: _coursecontroller,
-                    maxLines: 1,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(9),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Registration Number',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                  Text(registration_number),
-                  TextField(
-                    controller: _registration_numbercontroller,
-                    maxLines: 1,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(9),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Bio',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                  Text(bio),
-                  TextField(
-                    controller: _biocontroller,
-                    maxLines: 5,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(9),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Skills',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                  Text(skills),
-                  TextField(
-                    controller: _skillscontroller,
-                    maxLines: 5,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(9),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Hobbies',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                  Text(hobbies),
-                  TextField(
-                    controller: _hobbiescontroller,
-                    maxLines: 5,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(9),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
               Center(
                 child: ButtonTheme(
                   minWidth: 200.0,
                   height: 20.0,
-                  child: OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      // primary: Colors.white,
-                      // backgroundColor: Colors.black,
-                      shape: const StadiumBorder(),
-                      elevation: 2,
-                      padding: const EdgeInsets.all(7.5),
-                    ),
+                  child: ElevatedButton(
+                    // style: ElevatedButton.styleFrom(
+                    //   // primary: Colors.white,
+                    //   // backgroundColor: Colors.black,
+                    //   shape: const StadiumBorder(),
+                    //   elevation: 2,
+                    //   padding: const EdgeInsets.all(7.5),
+                    // ),
                     onPressed: () {
                       setState(() {
                         name = controller.text;
                         email = _emailcontroller.text;
-                        about = _aboutcontroller.text;
-                        bio = _biocontroller.text;
-                        skills = _skillscontroller.text;
-                        course = _coursecontroller.text;
-                        hobbies = _hobbiescontroller.text;
-                        registration_number =
-                            _registration_numbercontroller.text;
                       });
-                      FirebaseFirestore.instance
-                          .collection('UserData')
-                          .doc(currentUser.email)
-                          .update({
-                        "bio": bio,
-                        "name": name,
-                        "email": email,
-                        "about": about,
-                        "skills": skills,
-                        "course": course,
-                        "hobbies": hobbies,
-                        "registration_number": registration_number
-                      });
+                      if (name.isNotEmpty && email.isNotEmpty) {
+                        FirebaseFirestore.instance
+                            .collection('UserData')
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .update({
+                          "name": name,
+                          "email": email,
+                        });
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const ProfilePage(),
+                          ),
+                        );
+                      } else {
+                        Navigator.pop(context);
+                      }
                       // user.add({'name':named,'age':age}).then((value) => print('User Added')).catchError((error)=>print('Failed to add User: $error'));
-                      Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                          builder: (context) => const ProfilePage(),
-                        ),
-                        ModalRoute.withName('/'),
-                      );
                     },
                     child: const Text('Update Profile'),
                   ),

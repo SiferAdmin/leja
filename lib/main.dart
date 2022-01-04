@@ -4,10 +4,12 @@ import 'dart:developer' as developer;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:leja/pages/profile_page.dart';
 import 'package:leja/pages/sign_in_page_widget.dart';
 
@@ -60,16 +62,16 @@ class MyApp extends StatelessWidget {
         colorScheme: const ColorScheme.light(
           primary: Color(0xFFF687D4),
         ),
-        // appBarTheme: const AppBarTheme(
-        //   color: Color(0xFFF687D4),
-        //   elevation: 0,
-        //   centerTitle: true,
-        //   titleTextStyle: TextStyle(
-        //     fontWeight: FontWeight.bold,
-        //     fontFamily: 'Lexend Deca',
-        //     fontSize: 42,
-        //   ),
-        // ),
+        appBarTheme: const AppBarTheme(
+          color: Color(0xFFF687D4),
+          elevation: 0,
+          centerTitle: true,
+          titleTextStyle: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Lexend Deca',
+            fontSize: 40,
+          ),
+        ),
         // outlinedButtonTheme: OutlinedButtonThemeData(
         //     style: OutlinedButton.styleFrom(
         //   primary: const Color(0xFFF687D4),
@@ -593,6 +595,16 @@ class MyApp extends StatelessWidget {
       ),
       darkTheme: ThemeData(
         fontFamily: 'Lexend Deca',
+        appBarTheme: const AppBarTheme(
+          color: Colors.pink,
+          elevation: 0,
+          centerTitle: true,
+          titleTextStyle: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Lexend Deca',
+            fontSize: 40,
+          ),
+        ),
         // primaryColor: const Color(0xFFF687D4),
         // brightness: Brightness.dark,
         // backgroundColor: Colors.black,
@@ -1135,6 +1147,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
 
+  String name = 'User';
+
   @override
   void initState() {
     super.initState();
@@ -1179,6 +1193,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    CollectionReference loggedUser =
+        FirebaseFirestore.instance.collection('UserData');
+    // ignore: unused_local_variable
+    var _imagePath =
+        loggedUser.doc(FirebaseAuth.instance.currentUser!.uid).get();
     // @override
     // initState() {
     //   super.initState();
@@ -1198,6 +1217,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     // ignore: avoid_print
 
     Center(child: Text('Connection Status: ${_connectionStatus.toString()}'));
+    final DateFormat formatter = DateFormat('dd/MM/yyyy');
+    String dateNow = formatter.format(DateTime.now());
     // var user = FirebaseAuth.instance.currentUser;
     return Scaffold(
       key: scaffoldKey,
@@ -1229,73 +1250,107 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               );
                             },
                             child: Stack(
-                              alignment: const AlignmentDirectional(
-                                  .9, -0.89999999999999999),
-                              children: [
-                                Card(
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  // color: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(40),
+                                alignment: const AlignmentDirectional(
+                                    .9, -0.89999999999999999),
+                                children: [
+                                  FutureBuilder<DocumentSnapshot>(
+                                    future: loggedUser
+                                        .doc(FirebaseAuth
+                                            .instance.currentUser!.uid)
+                                        .get(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<DocumentSnapshot>
+                                            snapshot) {
+                                      if (snapshot.hasError) {
+                                        return const Text(
+                                            "Something went wrong");
+                                      }
+
+                                      if (snapshot.hasData &&
+                                          !snapshot.data!.exists) {
+                                        return const Text(
+                                            "Data requested does not exist");
+                                      }
+
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.done) {
+                                        Map<String, dynamic> data =
+                                            snapshot.data!.data()
+                                                as Map<String, dynamic>;
+                                        return Card(
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          // color: Colors.white,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(40),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(2, 2, 2, 2),
+                                            child: Container(
+                                              width: 60,
+                                              height: 60,
+                                              clipBehavior: Clip.antiAlias,
+                                              decoration: const BoxDecoration(
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: CachedNetworkImage(
+                                                  errorWidget: (context, url,
+                                                          error) =>
+                                                      const Icon(Icons.error),
+                                                  progressIndicatorBuilder:
+                                                      (context, url,
+                                                              downloadProgress) =>
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: SizedBox(
+                                                              height: 10,
+                                                              width: 10,
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        14.0),
+                                                                child:
+                                                                    CircularProgressIndicator(
+                                                                  strokeWidth:
+                                                                      2,
+                                                                  value: downloadProgress
+                                                                      .progress,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                  imageUrl:
+                                                      "${data['pic_link']}"),
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      return const Text("loading");
+                                    },
                                   ),
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            2, 2, 2, 2),
+                                  Align(
+                                    // ignore: prefer_const_constructors
+                                    alignment:
+                                        const AlignmentDirectional(0.5, 1.8),
                                     child: Container(
-                                      width: 60,
-                                      height: 60,
-                                      clipBehavior: Clip.antiAlias,
-                                      decoration: const BoxDecoration(
+                                      width: 20,
+                                      height: 20,
+                                      decoration: BoxDecoration(
+                                        color: _connectionStatus.toString() ==
+                                                'ConnectivityResult.none'
+                                            ? Colors.red
+                                            : Colors.green,
                                         shape: BoxShape.circle,
                                       ),
-                                      child: CachedNetworkImage(
-                                          errorWidget: (context, url, error) =>
-                                              const Icon(Icons.error),
-                                          progressIndicatorBuilder: (context,
-                                                  url, downloadProgress) =>
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: SizedBox(
-                                                  height: 10,
-                                                  width: 10,
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            14.0),
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                      strokeWidth: 2,
-                                                      value: downloadProgress
-                                                          .progress,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                          imageUrl:
-                                              'https://www.linkpicture.com/q/unknown_user_icon.webp'),
                                     ),
                                   ),
-                                ),
-                                Align(
-                                  // ignore: prefer_const_constructors
-                                  alignment: AlignmentDirectional(0.5, 1.8),
-                                  child: Container(
-                                    width: 20,
-                                    height: 20,
-                                    decoration: BoxDecoration(
-                                      color: _connectionStatus.toString() ==
-                                              'ConnectivityResult.none'
-                                          ? Colors.red
-                                          : Colors.green,
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
+                                ]),
+                          )
                         ],
                       ),
                       Padding(
@@ -1308,8 +1363,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           children: [
                             Row(
                               mainAxisSize: MainAxisSize.max,
-                              children: const [
-                                Text(
+                              children: [
+                                const Text(
                                   'Welcome,',
                                   style: TextStyle(
                                     fontFamily: 'Lexend Deca',
@@ -1319,16 +1374,44 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       4, 0, 0, 0),
-                                  child: Text(
-                                    'Jael',
-                                    style: TextStyle(
-                                      fontFamily: 'Lexend Deca',
-                                      // color: const Color(0xFF00968A),
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                  child: FutureBuilder<DocumentSnapshot>(
+                                    future: loggedUser
+                                        .doc(FirebaseAuth
+                                            .instance.currentUser!.uid)
+                                        .get(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<DocumentSnapshot>
+                                            snapshot) {
+                                      if (snapshot.hasError) {
+                                        return const Text(
+                                            "Something went wrong");
+                                      }
+
+                                      if (snapshot.hasData &&
+                                          !snapshot.data!.exists) {
+                                        return const Text(
+                                            "Data requested does not exist");
+                                      }
+
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.done) {
+                                        Map<String, dynamic> data =
+                                            snapshot.data!.data()
+                                                as Map<String, dynamic>;
+                                        return Text(
+                                          "${data['name']}",
+                                          style: const TextStyle(
+                                            fontFamily: 'Lexend Deca',
+                                            // color: const Color(0xFF1E2429),
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        );
+                                      }
+                                      return const Text("loading");
+                                    },
                                   ),
                                 ),
                               ],
@@ -1376,10 +1459,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              20, 20, 20, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               CachedNetworkImage(
                                 errorWidget: (context, url, error) =>
@@ -1400,9 +1484,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   ),
                                 ),
                                 imageUrl:
-                                    'https://www.linkpicture.com/q/Visa-Logo.png',
-                                width: 100,
-                                height: 50,
+                                    'https://www.linkpicture.com/q/transparent-logo.png',
+                                width: 200,
+                                height: 90,
                               ),
                             ],
                           ),
@@ -1445,13 +1529,13 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         ),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              20, 12, 20, 16),
+                              20, 12, 10, 16),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: const [
-                              Text(
-                                '****',
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              const Text(
+                                'Date: ',
                                 style: TextStyle(
                                   fontFamily: 'Lexend Deca',
                                   // color: Colors.white,
@@ -1460,8 +1544,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 ),
                               ),
                               Text(
-                                '05/25',
-                                style: TextStyle(
+                                dateNow,
+                                style: const TextStyle(
                                   fontFamily: 'Lexend Deca',
                                   // color: Colors.white,
                                   fontSize: 14,

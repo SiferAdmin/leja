@@ -41,4 +41,22 @@ class Validator {
 
     return null;
   }
+
+  static String? validatePasswordConfirm(
+      {required String? passwordConfirm, required String? password}) {
+    if (passwordConfirm == null) {
+      return null;
+    }
+    if (passwordConfirm != password) {
+      return 'Passwords don\'t match';
+    }
+
+    if (passwordConfirm.isEmpty) {
+      return 'Password confirm can\'t be empty';
+    } else if (passwordConfirm.length < 6) {
+      return 'Enter a password confirm with length at least 6';
+    }
+
+    return null;
+  }
 }

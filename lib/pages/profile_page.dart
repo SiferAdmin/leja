@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer' as developer;
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -71,6 +72,8 @@ class ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    CollectionReference loggedUser =
+        FirebaseFirestore.instance.collection('UserData');
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -117,57 +120,94 @@ class ProfilePageState extends State<ProfilePage> {
                                     alignment:
                                         const AlignmentDirectional(0, -1),
                                     children: [
-                                      Card(
-                                        clipBehavior:
-                                            Clip.antiAliasWithSaveLayer,
-                                        // color: Colors.white,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(40),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(2, 2, 2, 2),
-                                          child: Container(
-                                            width: 60,
-                                            height: 60,
-                                            clipBehavior: Clip.antiAlias,
-                                            decoration: const BoxDecoration(
-                                              shape: BoxShape.circle,
-                                            ),
-                                            child: CachedNetworkImage(
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        const Icon(Icons.error),
-                                                progressIndicatorBuilder:
-                                                    (context, url,
-                                                            downloadProgress) =>
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: SizedBox(
-                                                            height: 10,
-                                                            width: 10,
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .all(
-                                                                      14.0),
-                                                              child:
-                                                                  CircularProgressIndicator(
-                                                                strokeWidth: 2,
-                                                                value:
-                                                                    downloadProgress
-                                                                        .progress,
+                                      FutureBuilder<DocumentSnapshot>(
+                                        future: loggedUser
+                                            .doc(FirebaseAuth
+                                                .instance.currentUser!.uid)
+                                            .get(),
+                                        builder: (BuildContext context,
+                                            AsyncSnapshot<DocumentSnapshot>
+                                                snapshot) {
+                                          if (snapshot.hasError) {
+                                            return const Text(
+                                                "Something went wrong");
+                                          }
+
+                                          if (snapshot.hasData &&
+                                              !snapshot.data!.exists) {
+                                            return const Text(
+                                                "Data requested does not exist");
+                                          }
+
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.done) {
+                                            Map<String, dynamic> data =
+                                                snapshot.data!.data()
+                                                    as Map<String, dynamic>;
+                                            return Card(
+                                              clipBehavior:
+                                                  Clip.antiAliasWithSaveLayer,
+                                              // color: Colors.white,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(40),
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(2, 2, 2, 2),
+                                                child: Container(
+                                                  width: 60,
+                                                  height: 60,
+                                                  clipBehavior: Clip.antiAlias,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                  child: CachedNetworkImage(
+                                                      errorWidget: (context,
+                                                              url, error) =>
+                                                          const Icon(
+                                                              Icons.error),
+                                                      progressIndicatorBuilder:
+                                                          (context, url,
+                                                                  downloadProgress) =>
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        8.0),
+                                                                child: SizedBox(
+                                                                  height: 10,
+                                                                  width: 10,
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: const EdgeInsets
+                                                                            .all(
+                                                                        14.0),
+                                                                    child:
+                                                                        CircularProgressIndicator(
+                                                                      strokeWidth:
+                                                                          2,
+                                                                      value: downloadProgress
+                                                                          .progress,
+                                                                    ),
+                                                                  ),
+                                                                ),
                                                               ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                imageUrl:
-                                                    'https://www.linkpicture.com/q/unknown_user_icon.webp'),
-                                          ),
-                                        ),
+                                                      imageUrl:
+                                                          "${data['pic_link']}"),
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                          return Column(
+                                            children: const [
+                                              CircularProgressIndicator(),
+                                              Text("loading"),
+                                            ],
+                                          );
+                                        },
                                       ),
                                       Align(
                                         alignment: const AlignmentDirectional(
@@ -192,22 +232,46 @@ class ProfilePageState extends State<ProfilePage> {
                             ),
                           ],
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
-                              child: Text(
-                                'Jael',
-                                style: TextStyle(
-                                  fontFamily: 'Lexend Deca',
-                                  // color: Colors.white,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 8, 0, 0),
+                              child: FutureBuilder<DocumentSnapshot>(
+                                future: loggedUser
+                                    .doc(FirebaseAuth.instance.currentUser!.uid)
+                                    .get(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<DocumentSnapshot> snapshot) {
+                                  if (snapshot.hasError) {
+                                    return const Text("Something went wrong");
+                                  }
+
+                                  if (snapshot.hasData &&
+                                      !snapshot.data!.exists) {
+                                    return const Text(
+                                        "Data requested does not exist");
+                                  }
+
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.done) {
+                                    Map<String, dynamic> data = snapshot.data!
+                                        .data() as Map<String, dynamic>;
+                                    return Text(
+                                      "${data['name']}",
+                                      style: const TextStyle(
+                                        fontFamily: 'Lexend Deca',
+                                        // color: const Color(0xFF1E2429),
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    );
+                                  }
+                                  return const Text("loading");
+                                },
                               ),
                             ),
                           ],
@@ -215,18 +279,42 @@ class ProfilePageState extends State<ProfilePage> {
                         Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                              child: Text(
-                                'jaelapat@gmail.com',
-                                style: TextStyle(
-                                  fontFamily: 'Lexend Deca',
-                                  // color: Color(0xFFEE8B60),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.normal,
-                                ),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 4, 0, 0),
+                              child: FutureBuilder<DocumentSnapshot>(
+                                future: loggedUser
+                                    .doc(FirebaseAuth.instance.currentUser!.uid)
+                                    .get(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<DocumentSnapshot> snapshot) {
+                                  if (snapshot.hasError) {
+                                    return const Text("Something went wrong");
+                                  }
+
+                                  if (snapshot.hasData &&
+                                      !snapshot.data!.exists) {
+                                    return const Text(
+                                        "Data requested does not exist");
+                                  }
+
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.done) {
+                                    Map<String, dynamic> data = snapshot.data!
+                                        .data() as Map<String, dynamic>;
+                                    return Text(
+                                      "${data['email']}",
+                                      style: const TextStyle(
+                                        fontFamily: 'Lexend Deca',
+                                        // color: const Color(0xFF1E2429),
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    );
+                                  }
+                                  return const Text("loading");
+                                },
                               ),
                             ),
                           ],
@@ -405,56 +493,6 @@ class ProfilePageState extends State<ProfilePage> {
                                   EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
                               child: Text(
                                 'My App Preferences',
-                                style: TextStyle(
-                                  fontFamily: 'Lexend Deca',
-                                  // color: Color(0xFF090F13),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Align(
-                                alignment: AlignmentDirectional(0.9, 0),
-                                child: Icon(Icons.arrow_right_sharp,
-                                    // color: Color.fromARGB(255, 226, 60, 212),
-                                    size: 24),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          // color: Colors.white,
-                          shape: BoxShape.rectangle,
-                          border: Border.all(
-                            // color: Color(0xFFEFEFEF),
-                            width: 1,
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: const [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                              child: Icon(Icons.feed_sharp,
-                                  // color: Color.fromARGB(255, 226, 60, 212),
-                                  size: 24),
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                              child: Text(
-                                'About',
                                 style: TextStyle(
                                   fontFamily: 'Lexend Deca',
                                   // color: Color(0xFF090F13),

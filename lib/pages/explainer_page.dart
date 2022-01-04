@@ -18,8 +18,7 @@ class ExplainerState extends State<Explainer> {
     return SafeArea(
       child: Scaffold(
         key: scaffoldKey,
-        body: Column(
-          mainAxisSize: MainAxisSize.max,
+        body: ListView(
           children: [
             Row(
               mainAxisSize: MainAxisSize.max,
@@ -60,7 +59,7 @@ class ExplainerState extends State<Explainer> {
                                               ? MediaQuery.of(context)
                                                       .size
                                                       .height *
-                                                  0.7
+                                                  0.5
                                               : MediaQuery.of(context)
                                                       .size
                                                       .height *
