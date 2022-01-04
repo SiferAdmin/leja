@@ -16,28 +16,12 @@ class EditProfile extends StatefulWidget {
 }
 
 class EditProfileState extends State<EditProfile> {
-  // final Stream<QuerySnapshot> users =
-  //     FirebaseFirestore.instance.collection('users').snapshots();
-
-  // var firestoreDB = FirebaseFirestore.instance.collection("board").snapshots();
-
   final controller = TextEditingController();
   final _emailcontroller = TextEditingController();
-  // ignore: unused_field
-  final _namedcontroller = TextEditingController();
-  // ignore: unused_field
-  final _agecontroller = TextEditingController();
-  // ignore: non_constant_identifier_names
+
   static String name = "";
   static String email = "";
-  // ignore: unused_field
-  static String about = "";
-  static String bio = "";
-  static String skills = "";
-  static String hobbies = "";
-  static String course = "";
-  // ignore: non_constant_identifier_names
-  static String registration_number = "";
+
   var named = '';
   var age = 0;
   @override
@@ -47,12 +31,8 @@ class EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
-    // CollectionReference user = FirebaseFirestore.instance.collection('users');
     CollectionReference loggedUser =
         FirebaseFirestore.instance.collection('UserData');
-    // ignore: unused_local_variable
-    var _imagePath =
-        loggedUser.doc(FirebaseAuth.instance.currentUser!.uid).get();
 
     return Scaffold(
       appBar: AppBar(
@@ -103,11 +83,6 @@ class EditProfileState extends State<EditProfile> {
                       return const Text("loading");
                     },
                   ),
-
-                  // ProfileWidget(
-                  //   imagePath: _imagePath,
-                  //   onClicked: () async {},
-                  // ),
                   IconButton(
                     tooltip: 'Add Profile Photo',
                     icon: const Icon(
@@ -122,48 +97,6 @@ class EditProfileState extends State<EditProfile> {
                       );
                     },
                   ),
-                  // StreamBuilder<QuerySnapshot>(
-                  //   builder: (context,AsyncSnapshot<QuerySnapshot> snapshot) {
-                  //     if (!snapshot.hasData) return CircularProgressIndicator();
-                  //     return ListView.builder(
-                  //         itemCount: snapshot.data!.docs.length,
-                  //         itemBuilder: (context, int index) {
-                  //           return Text(snapshot.data!.docs[index]['title']);
-                  //         });
-                  //   },
-                  //   stream: firestoreDB,
-                  // ),
-
-                  // Center(
-                  //   child: StreamBuilder(
-                  //     stream: FirebaseFirestore.instance
-                  //         .collection('groceries')
-                  //         .orderBy('name')
-                  //         .snapshots()
-                  //     // FirebaseFirestore.instance
-                  //     //     .collection('UserData')
-                  //     //     .snapshots()
-                  //     ,
-                  //     builder:
-                  //         (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                  //       if (!snapshot.hasData) {
-                  //         return Center(child:  const Text('Loading'));
-                  //       }
-                  //       return ListView(
-                  //         children: snapshot.data!.docs.map((grocery) {
-                  //           return Center(
-                  //               child: ListTile(
-                  //             title: Text(grocery['name']),
-                  //             onLongPress: () {
-                  //               grocery.reference.delete();
-                  //                const Text('hey');
-                  //             },
-                  //           ));
-                  //         }).toList(),
-                  //       );
-                  //     },
-                  //   ),
-                  // )
                 ],
               ),
               Column(
@@ -210,13 +143,6 @@ class EditProfileState extends State<EditProfile> {
                   minWidth: 200.0,
                   height: 20.0,
                   child: ElevatedButton(
-                    // style: ElevatedButton.styleFrom(
-                    //   // primary: Colors.white,
-                    //   // backgroundColor: Colors.black,
-                    //   shape: const StadiumBorder(),
-                    //   elevation: 2,
-                    //   padding: const EdgeInsets.all(7.5),
-                    // ),
                     onPressed: () {
                       setState(() {
                         name = controller.text;
@@ -238,7 +164,6 @@ class EditProfileState extends State<EditProfile> {
                       } else {
                         Navigator.pop(context);
                       }
-                      // user.add({'name':named,'age':age}).then((value) => print('User Added')).catchError((error)=>print('Failed to add User: $error'));
                     },
                     child: const Text('Update Profile'),
                   ),
