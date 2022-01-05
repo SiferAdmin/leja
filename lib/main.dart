@@ -12,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:leja/pages/profile_page.dart';
 import 'package:leja/pages/sign_in_page_widget.dart';
+import 'package:leja/views/pages/notes/notes_dashboard.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -193,6 +194,9 @@ class MyApp extends StatelessWidget {
           800: Color(0xff66003d),
           900: Color(0xff33001e)
         }),
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          backgroundColor: Color(0xffff92d3),
+        ),
         brightness: Brightness.light,
         primaryColor: const Color(0xffff92d3),
         primaryColorLight: const Color(0xffffccea),
@@ -595,6 +599,9 @@ class MyApp extends StatelessWidget {
       ),
       darkTheme: ThemeData(
         fontFamily: 'Lexend Deca',
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          backgroundColor: Colors.pink,
+        ),
         appBarTheme: const AppBarTheme(
           color: Colors.pink,
           elevation: 0,
@@ -1644,7 +1651,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               ),
                             ),
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        const NotesDashboard()));
+                              },
                               style: ElevatedButton.styleFrom(
                                   fixedSize: Size(
                                       MediaQuery.of(context).size.width * 0.28,
