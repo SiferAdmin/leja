@@ -12,7 +12,14 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:leja/pages/profile_page.dart';
 import 'package:leja/pages/sign_in_page_widget.dart';
+import 'package:leja/views/pages/events/events_dashboard.dart';
+import 'package:leja/views/pages/expenses/root_app.dart';
 import 'package:leja/views/pages/notes/notes_dashboard.dart';
+import 'package:leja/views/pages/projects/projects_dashboard.dart';
+import 'package:leja/views/pages/vault/vault_dashboard.dart';
+
+final Brightness bright =
+    WidgetsBinding.instance!.platformDispatcher.platformBrightness;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -63,6 +70,7 @@ class MyApp extends StatelessWidget {
         colorScheme: const ColorScheme.light(
           primary: Color(0xFFF687D4),
         ),
+        // colorSchemeSeed: Colors.white,
         appBarTheme: const AppBarTheme(
           color: Color(0xFFF687D4),
           elevation: 0,
@@ -1219,8 +1227,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     // ignore: unused_local_variable
     var brightnes = MediaQuery.of(context).platformBrightness;
     // ignore: avoid_print
-    print(
-        '***************************************************************************************************************************');
     // ignore: avoid_print
 
     Center(child: Text('Connection Status: ${_connectionStatus.toString()}'));
@@ -1709,7 +1715,13 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               ),
                             ),
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ProjectsDashboard(
+                                       
+                                        )));
+                              },
                               style: ElevatedButton.styleFrom(
                                   fixedSize: Size(
                                       MediaQuery.of(context).size.width * 0.28,
@@ -1827,7 +1839,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               ),
                             ),
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        const Vaultdashboard()));
+                              },
                               style: ElevatedButton.styleFrom(
                                   fixedSize: Size(
                                       MediaQuery.of(context).size.width * 0.28,
@@ -1881,7 +1897,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               ),
                             ),
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => const RootApp()));
+                              },
                               style: ElevatedButton.styleFrom(
                                   fixedSize: Size(
                                       MediaQuery.of(context).size.width * 0.28,
@@ -2053,7 +2072,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               ),
                             ),
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        const EventDashboard()));
+                              },
                               style: ElevatedButton.styleFrom(
                                   fixedSize: Size(
                                       MediaQuery.of(context).size.width * 0.28,
