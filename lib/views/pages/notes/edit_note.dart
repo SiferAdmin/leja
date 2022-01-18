@@ -3,14 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:leja/utils/validator/validator.dart';
 
-class AddNotePage extends StatefulWidget {
-  const AddNotePage({Key? key}) : super(key: key);
+class EditNote extends StatefulWidget {
+  const EditNote({Key? key}) : super(key: key);
 
   @override
-  _AddNotePageState createState() => _AddNotePageState();
+  _EditNoteState createState() => _EditNoteState();
 }
 
-class _AddNotePageState extends State<AddNotePage> {
+class _EditNoteState extends State<EditNote> {
   String noteTitle = '';
   String noteDesc = '';
 
@@ -20,24 +20,31 @@ class _AddNotePageState extends State<AddNotePage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(appBar: AppBar(actions: [ Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-             
-              ElevatedButton(
-                  onPressed: () {
-                    add();
-                  },
-                  child: const Text('Save')),
-            ],
-          ),],title: const Text('Add Note'),),
+        child: Scaffold(
+      appBar: AppBar(
+        title: const Text('Edit Note'),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      add();
+                    },style:ElevatedButton.styleFrom(primary: Colors.transparent,shadowColor: Colors.transparent),
+                    child: const Text('Save')),
+              ],
+            ),
+          ),
+        ],
+      ),
       // floatingActionButton:
       //     FloatingActionButton(onPressed: () {}, child: const Icon(Icons.add)),
       body: Scrollbar(
           child: ListView(
         padding: const EdgeInsets.all(12),
         children: [
-         
           const SizedBox(
             height: 5,
           ),

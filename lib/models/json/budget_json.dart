@@ -1,5 +1,4 @@
-// ignore: constant_identifier_names
-import 'package:flutter/material.dart';
+import 'package:leja/themes/colors.dart';
 
 // ignore: constant_identifier_names
 const List budget_json = [
@@ -8,20 +7,20 @@ const List budget_json = [
     "price": "\$2250.00",
     "label_percentage": "45%",
     "percentage": 0.45,
-    "color": Colors.green
+    "color": green
   },
   {
     "name": "Automobile",
     "price": "\$3000.00",
     "label_percentage": "70%",
     "percentage": 0.7,
-    "color": Colors.red
+    "color": red
   },
   {
     "name": "Bank",
     "price": "\$4000.00",
     "label_percentage": "90%",
     "percentage": 0.9,
-    "color": Colors.blue
+    "color": blue
   }
 ];

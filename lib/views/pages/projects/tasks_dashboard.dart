@@ -2,24 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:leja/main.dart';
-import 'package:leja/views/pages/projects/edit_project.dart';
-import 'package:leja/views/pages/projects/create_project.dart';
-import 'package:leja/views/pages/projects/view_project.dart';
+import 'package:leja/views/pages/projects/create_project_task.dart';
+import 'package:leja/views/pages/projects/edit_project_task.dart';
+import 'package:leja/views/pages/projects/view_task.dart';
 
-class ProjectsDashboard extends StatefulWidget {
-  const ProjectsDashboard({Key? key}) : super(key: key);
+class TasksDashboard extends StatefulWidget {
+  const TasksDashboard({Key? key}) : super(key: key);
 
   @override
   _ProjectsDashboardState createState() => _ProjectsDashboardState();
 }
 
-class _ProjectsDashboardState extends State<ProjectsDashboard> {
+class _ProjectsDashboardState extends State<TasksDashboard> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
-        title: const Text('Projects'),
+        title: const Text('Tasks'),
       ),
       body: Padding(
         padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
@@ -49,7 +49,7 @@ class _ProjectsDashboardState extends State<ProjectsDashboard> {
                       const Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                         child: Text(
-                          'All \nProjects',
+                          'All \nTasks',
                           // style: FlutterFlowTheme.bodyText1,
                         ),
                       ),
@@ -88,7 +88,7 @@ class _ProjectsDashboardState extends State<ProjectsDashboard> {
                       const Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                         child: Text(
-                          'Open Projects',
+                          'Open Tasks',
                           // style: FlutterFlowTheme.bodyText1,
                         ),
                       ),
@@ -124,7 +124,7 @@ class _ProjectsDashboardState extends State<ProjectsDashboard> {
                       const Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                         child: Text(
-                          'Closed Projects',
+                          'Closed Tasks',
                           // style: FlutterFlowTheme.bodyText1,
                         ),
                       ),
@@ -187,9 +187,9 @@ class _ProjectsDashboardState extends State<ProjectsDashboard> {
                   autoClose: true,
                   // color: Colors.blue,
                   icon: FontAwesomeIcons.solidEdit,
-                  onPressed:(context) {
+                  onPressed: (context) {
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const EditProject()));
+                      builder: (context) => const EditProjectTask()));
                   },
                 ),
                 SlidableAction(
@@ -204,8 +204,8 @@ class _ProjectsDashboardState extends State<ProjectsDashboard> {
                     // color: Colors.blue,
                     icon: FontAwesomeIcons.doorClosed,
                     onPressed: (context) {
-                    
-                  }
+                      
+                    },
                     // print('SlidableActionWidget pressed ...');
 
                     ),
@@ -213,10 +213,10 @@ class _ProjectsDashboardState extends State<ProjectsDashboard> {
               child: ListTile(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ViewProject()));
+                      builder: (context) => const ViewTask()));
                 },
                 title: const Text(
-                  'Project 1',
+                  'Task 1',
                   // style: FlutterFlowTheme.title3,
                 ),
                 subtitle: const Text(
@@ -234,14 +234,13 @@ class _ProjectsDashboardState extends State<ProjectsDashboard> {
                 dense: false,
               ),
             ),
-          
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const CreateProject()));
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const CreateProjectTask()));
         },
         // backgroundColor: FlutterFlowTheme.primaryColor,
         elevation: 8,
@@ -257,7 +256,7 @@ class _ProjectsDashboardState extends State<ProjectsDashboard> {
               ),
             ),
             Text(
-              'Create Project',
+              'Create Task',
               style: TextStyle(color: Colors.white),
             ),
           ],

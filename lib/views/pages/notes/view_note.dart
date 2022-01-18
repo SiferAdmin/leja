@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:leja/views/pages/notes/edit_note.dart';
 
 class ViewNotePage extends StatefulWidget {
   final Map data;
@@ -28,6 +29,36 @@ class _AddNotePageState extends State<ViewNotePage> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+           appBar: AppBar(title: const Text('View Note',style: TextStyle(fontSize: 24),),actions: [ Row(
+                children: [
+                  ElevatedButton(
+                    // style: ButtonStyle(
+                    //     backgroundColor:
+                    //         MaterialStateProperty.all(Colors.red[300])),
+                    style:ElevatedButton.styleFrom(primary: Colors.transparent,shadowColor: Colors.transparent),
+                    onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const EditNote()));
+                    },
+                    child: const Icon(Icons.mode_edit_rounded),
+                  ),
+                  // const SizedBox(
+                  //   width: 5,
+                  // ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                        // style: ButtonStyle(
+                        //     backgroundColor:
+                        //         MaterialStateProperty.all(Colors.red[300])),
+                        style:ElevatedButton.styleFrom(primary: Colors.transparent,shadowColor: Colors.transparent),
+                        onPressed: () {
+                          deleteNote();
+                        },
+                        child: const Icon(Icons.delete_forever_sharp)),
+                  ),
+                ],
+              ),],),
       // floatingActionButton:
       //     FloatingActionButton(onPressed: () {}, child: const Icon(Icons.add)),
       body: Scrollbar(
@@ -36,20 +67,9 @@ class _AddNotePageState extends State<ViewNotePage> {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Icon(Icons.arrow_back)),
-              ElevatedButton(
-                  // style: ButtonStyle(
-                  //     backgroundColor:
-                  //         MaterialStateProperty.all(Colors.red[300])),
-                  onPressed: () {
-                    deleteNote();
-                  },
-                  child: const Icon(Icons.delete_forever_sharp)),
+            children: const [
+              
+             
             ],
           ),
           const SizedBox(
