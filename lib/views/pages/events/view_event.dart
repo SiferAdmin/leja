@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:leja/views/pages/events/edit_event.dart';
-import 'package:leja/views/pages/sales/edit_sales.dart';
 
 class ViewEvent extends StatefulWidget {
   const ViewEvent({Key? key}) : super(key: key);
@@ -22,7 +21,9 @@ class _ViewEventState extends State<ViewEvent> {
         // backgroundColor: FlutterFlowTheme.primaryColor,
         automaticallyImplyLeading: true,
         title: const Text(
+         
           'Event View',
+           style:TextStyle(fontSize: 24),
          
         ),
         actions: [
@@ -61,7 +62,7 @@ class _ViewEventState extends State<ViewEvent> {
         centerTitle: true,
         elevation: 4,
       ),
-      backgroundColor: const Color(0xFFF5F5F5),
+      // backgroundColor: const Color(0xFFF5F5F5),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),

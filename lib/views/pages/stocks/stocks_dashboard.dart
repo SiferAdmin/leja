@@ -74,7 +74,7 @@ class _StockDashboardWidgetState extends State<StockDashboardWidget> {
                 children: [
                   Card(
                     clipBehavior: Clip.antiAliasWithSaveLayer,
-                    color: const Color(0xFFF5F5F5),
+                    // color: const Color(0xFFF5F5F5),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -95,7 +95,7 @@ class _StockDashboardWidgetState extends State<StockDashboardWidget> {
                           children: const [
                             FaIcon(
                               FontAwesomeIcons.hourglassHalf,
-                              color: Colors.black,
+                              // color: Colors.black,
                               size: 24,
                             ),
                             Padding(
@@ -113,7 +113,7 @@ class _StockDashboardWidgetState extends State<StockDashboardWidget> {
                   ),
                   Card(
                     clipBehavior: Clip.antiAliasWithSaveLayer,
-                    color: const Color(0xFFF5F5F5),
+                    // color: const Color(0xFFF5F5F5),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -133,7 +133,7 @@ class _StockDashboardWidgetState extends State<StockDashboardWidget> {
                           children: const [
                             FaIcon(
                               FontAwesomeIcons.solidHourglass,
-                              color: Colors.black,
+                              // color: Colors.black,
                               size: 24,
                             ),
                             Padding(
@@ -151,7 +151,7 @@ class _StockDashboardWidgetState extends State<StockDashboardWidget> {
                   ),
                   Card(
                     clipBehavior: Clip.antiAliasWithSaveLayer,
-                    color: const Color(0xFFF5F5F5),
+                    // color: const Color(0xFFF5F5F5),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -170,7 +170,7 @@ class _StockDashboardWidgetState extends State<StockDashboardWidget> {
                           children: const [
                             FaIcon(
                               FontAwesomeIcons.hourglass,
-                              color: Colors.black,
+                              // color: Colors.black,
                               size: 24,
                             ),
                             Padding(

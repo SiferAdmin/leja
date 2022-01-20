@@ -89,18 +89,8 @@ class _TaskWidgetState extends State<EditProjectTask> {
                       fontSize: 14,
                       fontWeight: FontWeight.normal,
                     ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
                     filled: true,
                     prefixIcon: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -225,18 +215,8 @@ class _TaskWidgetState extends State<EditProjectTask> {
                       fontSize: 14,
                       fontWeight: FontWeight.normal,
                     ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
                     filled: true,
                     prefixIcon: Padding(
                       padding: const EdgeInsets.all(8.0),

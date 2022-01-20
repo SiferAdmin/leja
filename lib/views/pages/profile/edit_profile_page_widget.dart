@@ -124,9 +124,9 @@ class EditProfileState extends State<EditProfile> {
                             )
                           : null,
                       labelText: '',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(9),
-                      ),
+                      // border: OutlineInputBorder(
+                      //   borderRadius: BorderRadius.circular(9),
+                      // ),
                     ),
                   ),
                 ],
@@ -155,9 +155,9 @@ class EditProfileState extends State<EditProfile> {
                               ),
                             )
                           : null,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(9),
-                      ),
+                      // border: OutlineInputBorder(
+                      //   borderRadius: BorderRadius.circular(9),
+                      // ),
                     ),
                   ),
                 ],

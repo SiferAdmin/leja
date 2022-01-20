@@ -35,7 +35,7 @@ class _TramsactionDashboardWidgetState
         centerTitle: true,
         elevation: 4,
       ),
-      backgroundColor: const Color(0xFFF5F5F5),
+      // backgroundColor: const Color(0xFFF5F5F5),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           // print('FloatingActionButton pressed ...');
@@ -75,7 +75,7 @@ class _TramsactionDashboardWidgetState
                 children: [
                   Card(
                     clipBehavior: Clip.antiAliasWithSaveLayer,
-                    color: const Color(0xFFF5F5F5),
+                    // color: const Color(0xFFF5F5F5),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -83,20 +83,20 @@ class _TramsactionDashboardWidgetState
                       children: [
                         const Padding(
                           padding:
-                              EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                              EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
                           child: Text(
                             'All \nTransactions',
                             // style: FlutterFlowTheme.bodyText1,
                           ),
                         ),
-                        const Spacer(),
+                        // const Spacer(flex: 1),
                         Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const [
                             FaIcon(
                               FontAwesomeIcons.dollyFlatbed,
-                              color: Colors.black,
+                              // color: Colors.black,
                               size: 24,
                             ),
                             Padding(
@@ -114,7 +114,7 @@ class _TramsactionDashboardWidgetState
                   ),
                   Card(
                     clipBehavior: Clip.antiAliasWithSaveLayer,
-                    color: const Color(0xFFF5F5F5),
+                    // color: const Color(0xFFF5F5F5),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -134,7 +134,7 @@ class _TramsactionDashboardWidgetState
                           children: const [
                             FaIcon(
                               FontAwesomeIcons.dolly,
-                              color: Colors.black,
+                              // color: Colors.black,
                               size: 24,
                             ),
                             Padding(
@@ -152,7 +152,7 @@ class _TramsactionDashboardWidgetState
                   ),
                   Card(
                     clipBehavior: Clip.antiAliasWithSaveLayer,
-                    color: const Color(0xFFF5F5F5),
+                    // color: const Color(0xFFF5F5F5),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -171,7 +171,7 @@ class _TramsactionDashboardWidgetState
                           children: const [
                             FaIcon(
                               FontAwesomeIcons.trailer,
-                              color: Colors.black,
+                              // color: Colors.black,
                               size: 24,
                             ),
                             Padding(

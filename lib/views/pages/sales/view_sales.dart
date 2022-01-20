@@ -60,7 +60,7 @@ class _SalesViewWidgetState extends State<SalesViewWidget> {
         centerTitle: true,
         elevation: 4,
       ),
-      backgroundColor: const Color(0xFFF5F5F5),
+      // backgroundColor: const Color(0xFFF5F5F5),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),

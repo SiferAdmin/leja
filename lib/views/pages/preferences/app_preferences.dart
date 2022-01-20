@@ -11,6 +11,7 @@ class AppPreferences extends StatefulWidget {
 class _AppPreferencesState extends State<AppPreferences> {
   @override
   Widget build(BuildContext context) {
+    bool isSwitched = false;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -20,26 +21,37 @@ class _AppPreferencesState extends State<AppPreferences> {
           ),
         ),
         body: SettingsList(
-        sections: [
-          SettingsSection(
-            // title: 'Section',
-            tiles: [
-              SettingsTile(
-                title: 'Language',
-                subtitle: 'English',
-                leading:const Icon(Icons.language),
-                onPressed: (BuildContext context) {},
-              ),
-              SettingsTile.switchTile(
-                title: 'Use fingerprint',
-                leading:const Icon(Icons.fingerprint),
-                switchValue: true,
-                onToggle: (bool value) {},
-              ),
-            ],
-          ),
-        ],
-      ),
+          sections: [
+            SettingsSection(
+              // title: 'Section',
+              tiles: [
+                SettingsTile(
+                  title: 'Language',
+                  subtitle: 'English',
+                  leading: const Icon(Icons.language),
+                  onPressed: (BuildContext context) {},
+                ),
+                SettingsTile.switchTile(
+                  title: 'Use System Theme',
+                  leading: const Icon(Icons.phone_android),
+                  switchValue: isSwitched,
+                  onToggle: (value) {
+                    setState(() {
+                      isSwitched = value;
+                    });
+                  },
+                ),
+                
+                SettingsTile.switchTile(
+                  title: 'Use fingerprint',
+                  leading: const Icon(Icons.fingerprint),
+                  switchValue: true,
+                  onToggle: (bool value) {},
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

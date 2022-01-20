@@ -61,35 +61,23 @@ class _AddNotePageState extends State<AddNotePage> {
               },
               controller: noteTitleController,
               obscureText: false,
-              decoration: InputDecoration(
+              decoration:const InputDecoration(
                 labelText: 'New Note Title',
-                labelStyle: const TextStyle(
+                labelStyle:  TextStyle(
                   fontFamily: 'Lexend Deca',
                   // color: Color(0xFF95A1AC),
                   fontSize: 14,
                   fontWeight: FontWeight.normal,
                 ),
                 hintText: 'Enter your new note title here...',
-                hintStyle: const TextStyle(
+                hintStyle:  TextStyle(
                   fontFamily: 'Lexend Deca',
                   // color: Color(0xFF95A1AC),
                   fontSize: 14,
                   fontWeight: FontWeight.normal,
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                    // color: Color(0xFFDBE2E7),
-                    width: 2,
-                  ),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                    // color: Color(0xFFDBE2E7),
-                    width: 2,
-                  ),
-                  borderRadius: BorderRadius.circular(8),
-                ),
+                enabledBorder:InputBorder.none,
+                focusedBorder: InputBorder.none,
                 filled: true,
                 // fillColor: Colors.white,
               ),
@@ -121,35 +109,23 @@ class _AddNotePageState extends State<AddNotePage> {
               },
               controller: noteDescController,
               obscureText: false,
-              decoration: InputDecoration(
+              decoration:const InputDecoration(
                 labelText: 'New Note Description',
-                labelStyle: const TextStyle(
+                labelStyle:  TextStyle(
                   fontFamily: 'Lexend Deca',
                   // color: Color(0xFF95A1AC),
                   fontSize: 14,
                   fontWeight: FontWeight.normal,
                 ),
                 hintText: 'Enter your new note description here...',
-                hintStyle: const TextStyle(
+                hintStyle:  TextStyle(
                   fontFamily: 'Lexend Deca',
                   // color: Color(0xFF95A1AC),
                   fontSize: 14,
                   fontWeight: FontWeight.normal,
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                    // color: Color(0xFFDBE2E7),
-                    width: 2,
-                  ),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                    // color: Color(0xFFDBE2E7),
-                    width: 2,
-                  ),
-                  borderRadius: BorderRadius.circular(8),
-                ),
+                enabledBorder:InputBorder.none,
+                focusedBorder:InputBorder.none,
                 filled: true,
                 // fillColor: Colors.white,
               ),

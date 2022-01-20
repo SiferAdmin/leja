@@ -28,21 +28,39 @@ class _CreateEventState extends State<CreateEvent> {
   final _formKey = GlobalKey<FormState>();
 
   final titleController = TextEditingController();
-
-  String _valueChanged1 = '';
+  String valueChanged1 = '';
+  DateTime now = DateTime.now();
+  // ignore: unused_field
   String _valueToValidate1 = '';
+  // ignore: unused_field
   String _valueSaved1 = '';
-  String _valueChanged2 = '';
-  String _valueToValidate2 = '';
-  String _valueSaved2 = '';
-  String _valueChanged3 = '';
-  String _valueToValidate3 = '';
-  String _valueSaved3 = '';
-  String _valueChanged4 = '';
-  String _valueToValidate4 = '';
-  String _valueSaved4 = '';
+  // ignore: unused_field
+  final String _valueChanged2 = '';
+  // ignore: unused_field
+  final String _valueToValidate2 = '';
+  // ignore: unused_field
+  final String _valueSaved2 = '';
+  // ignore: unused_field
+  final String _valueChanged3 = '';
+  // ignore: unused_field
+  final String _valueToValidate3 = '';
+  // ignore: unused_field
+  final String _valueSaved3 = '';
+  // ignore: unused_field
+  final String _valueChanged4 = '';
+  // ignore: unused_field
+  final String _valueToValidate4 = '';
+  // ignore: unused_field
+  final String _valueSaved4 = '';
 
   String? eventTitle;
+  final DateTime _initialValue = DateTime.now();
+  late final DateTime newDate ;
+  bool isChecked = false;
+
+  DateTime selectedDate=DateTime.now();
+
+  DateFormat format = DateFormat("dd.MM.yyyy");
 
   @override
   void initState() {
@@ -65,20 +83,20 @@ class _CreateEventState extends State<CreateEvent> {
     String lsMinute = TimeOfDay.now().minute.toString().padLeft(2, '0');
     _controller4 = TextEditingController(text: '$lsHour:$lsMinute');
 
-    _getValue();
+    // _getValue();
   }
 
-  Future<void> _getValue() async {
-    await Future.delayed(const Duration(seconds: 3), () {
-      setState(() {
-        //_initialValue = '2000-10-22 14:30';
-        _controller1.text = '2000-09-20 14:30';
-        _controller2.text = '2001-10-21 15:31';
-        _controller3.text = '2002-11-22';
-        _controller4.text = '17:01';
-      });
-    });
-  }
+  // Future<void> _getValue() async {
+  //   await Future.delayed(const Duration(seconds: 3), () {
+  //     setState(() {
+  //       //_initialValue = '2000-10-22 14:30';
+  //       _controller1.text = '2000-09-20 14:30';
+  //       _controller2.text = '2001-10-21 15:31';
+  //       _controller3.text = '2002-11-22';
+  //       _controller4.text = '17:01';
+  //     });
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -124,50 +142,53 @@ class _CreateEventState extends State<CreateEvent> {
                         type: DateTimePickerType.dateTimeSeparate,
                         dateMask: 'd MMM, yyyy',
                         controller: _controller1,
-                        //initialValue: _initialValue,
+                        
+                        // initialValue: 'q',
                         firstDate: DateTime(2000),
-                        lastDate: DateTime(2100),
+                        lastDate: DateTime(2100), initialDate: selectedDate,
                         icon: const Icon(Icons.event),
                         dateLabelText: 'Date',
                         timeLabelText: "Hour",
-                        //use24HourFormat: false,
+                        use24HourFormat: false,
                         //locale: Locale('pt', 'BR'),
-                        selectableDayPredicate: (date) {
-                          if (date.weekday == 6 || date.weekday == 7) {
-                            return false;
-                          }
-                          return true;
-                        },
-                        onChanged: (val) =>
-                            setState(() => _valueChanged1 = val),
+                        // selectableDayPredicate: (date) {
+                        //   if (date.weekday == 6 || date.weekday == 7) {
+                        //     return false;
+                        //   }
+                        //   return true;
+                        // },
+                        onChanged: (val) => setState(() => valueChanged1 = val),
                         validator: (val) {
                           setState(() => _valueToValidate1 = val ?? '');
+                          // setState(() => newDate = DateTime.parse(val!));
                           return null;
                         },
                         onSaved: (val) =>
                             setState(() => _valueSaved1 = val ?? ''),
                       ),
                       const Text('TO'),
+                      
                       DateTimePicker(
                         type: DateTimePickerType.dateTimeSeparate,
                         dateMask: 'd MMM, yyyy',
                         controller: _controller1,
-                        //initialValue: _initialValue,
-                        firstDate: DateTime(2000),
-                        lastDate: DateTime(2100),
+                        // initialValue: 'q',
+                        firstDate: selectedDate,
+                        lastDate: DateTime(2100), 
+                        initialDate: selectedDate,
                         icon: const Icon(Icons.event),
                         dateLabelText: 'Date',
                         timeLabelText: "Hour",
-                        //use24HourFormat: false,
+                        use24HourFormat: false,
                         //locale: Locale('pt', 'BR'),
-                        selectableDayPredicate: (date) {
-                          if (date.weekday == 6 || date.weekday == 7) {
-                            return false;
-                          }
-                          return true;
-                        },
-                        onChanged: (val) =>
-                            setState(() => _valueChanged1 = val),
+                        // selectableDayPredicate: (date) {
+                        //   if (date.isAfter(selectedDate)||date.isBefore(DateTime(2050))) {
+                        //     return false;
+                        //   }
+                        //   return true;
+                        // },
+                        
+                        onChanged: (val) => setState(() => valueChanged1 = val),
                         validator: (val) {
                           setState(() => _valueToValidate1 = val ?? '');
                           return null;
@@ -178,9 +199,12 @@ class _CreateEventState extends State<CreateEvent> {
                       Row(
                         children: [
                           Checkbox(
-                            value: false,
-                            onChanged: (value) {},
-                          ),
+                              value: isChecked,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  isChecked = value!;
+                                });
+                              }),
                           const Text('Is active All Day')
                         ],
                       ),
@@ -253,16 +277,16 @@ class _CreateEventState extends State<CreateEvent> {
         onFieldSubmitted: (_) => saveForm(),
         controller: titleController,
         obscureText: false,
-        decoration:const InputDecoration(
+        decoration: const InputDecoration(
           labelText: 'New Event Title',
-          labelStyle:  TextStyle(
+          labelStyle: TextStyle(
             fontFamily: 'Lexend Deca',
             // color: Color(0xFF95A1AC),
             fontSize: 14,
             fontWeight: FontWeight.normal,
           ),
           hintText: 'Add Title',
-          hintStyle:  TextStyle(
+          hintStyle: TextStyle(
             fontFamily: 'Lexend Deca',
             // color: Color(0xFF95A1AC),
             fontSize: 14,

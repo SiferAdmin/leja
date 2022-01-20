@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:leja/views/pages/transaction/edit_transaction.dart';
@@ -20,12 +19,17 @@ class _TransactionViewWidgetState extends State<TransactionViewWidget> {
       appBar: AppBar(
         // backgroundColor: FlutterFlowTheme.primaryColor,
         automaticallyImplyLeading: true,
-        title: const Text(
-          'Transaction View',style: TextStyle(fontSize: 24),
-          //
+        title:const Padding(
+          padding:  EdgeInsets.all(8.0),
+          child: Center(
+            child:  Text(
+              'Transaction \nView', style: TextStyle(fontSize: 24),
+              //
+            ),
+          ),
         ),
         actions: [
-         IconButton(
+          IconButton(
             // borderColor: Colors.transparent,
             // borderRadius: 30,
             // borderWidth: 1,
@@ -60,7 +64,7 @@ class _TransactionViewWidgetState extends State<TransactionViewWidget> {
         centerTitle: true,
         elevation: 4,
       ),
-      backgroundColor: const Color(0xFFF5F5F5),
+      // backgroundColor: const Color(0xFFF5F5F5),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
@@ -75,7 +79,8 @@ class _TransactionViewWidgetState extends State<TransactionViewWidget> {
                   Align(
                     alignment: const AlignmentDirectional(0, 0),
                     child: Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                       child: Material(
                         color: Colors.transparent,
                         elevation: 12,
@@ -116,101 +121,77 @@ class _TransactionViewWidgetState extends State<TransactionViewWidget> {
                 children: const [
                   Text(
                     'Transaction Description',
-                   
                   ),
                   Text(
                     'Project --',
-                   
                   ),
                 ],
               ),
               const Text(
                 'Transaction Category',
-               
               ),
               const Text(
                 'Project --',
-               
               ),
               const Text(
                 'Transaction Cost',
-               
               ),
               const Text(
                 'Project --',
-               
               ),
               const Text(
                 'Transaction Date & Time',
-               
               ),
               const Text(
                 'Project --',
-               
               ),
               const Text(
                 'Transaction Units ',
-               
               ),
               const Text(
                 'Project --',
-               
               ),
               const Text(
                 'Transaction Party',
-               
               ),
               const Text(
                 'Project --',
-               
               ),
               const Text(
                 'Product Buyer Title',
-               
               ),
               const Text(
                 'Project --',
-               
               ),
               const Text(
                 'Payment Status',
-               
               ),
               const Text(
                 'Project --',
-               
               ),
               const Text(
                 'Paymet Mode',
-               
               ),
               const Text(
                 'Project --',
-               
               ),
               const Text(
                 'Total Amount',
-               
               ),
               const Text(
                 'Project --',
-               
               ),
               const Text(
                 'Pending Balance',
-               
               ),
               const Text(
                 'Project --',
-               
               ),
               const Text(
                 'Transaction Attachments',
-               
               ),
               const Text(
                 'Project --',
-               
               ),
             ],
           ),

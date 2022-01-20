@@ -62,12 +62,12 @@ class MyApp extends StatelessWidget {
         // locale: DevicePreview.locale(context),
         color: Colors.pink,
         debugShowCheckedModeBanner: false,
-        localizationsDelegates: [
+        localizationsDelegates: const [
         GlobalWidgetsLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: [Locale('en', 'US')], //, Locale('pt', 'BR')],
+      supportedLocales: const [Locale('en', 'US')], //, Locale('pt', 'BR')],
         theme: customLightTheme(context),
         darkTheme: customDarkTheme(context),
         themeMode: ThemeMode.system,

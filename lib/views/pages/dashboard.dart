@@ -13,7 +13,6 @@ import 'package:leja/views/pages/notes/notes_dashboard.dart';
 import 'package:leja/views/pages/profile/profile_page.dart';
 import 'package:leja/views/pages/projects/projects_dashboard.dart';
 import 'package:leja/views/pages/sales/sales_dashboard.dart';
-import 'package:leja/views/pages/stem/stem.dart';
 import 'package:leja/views/pages/stocks/stocks_dashboard.dart';
 import 'package:leja/views/pages/transaction/transaction_dashboard.dart';
 import 'package:leja/views/widgets/date_time_picker.dart';

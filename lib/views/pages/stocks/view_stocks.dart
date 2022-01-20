@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:leja/views/pages/stocks/edit_stock.dart';
@@ -20,10 +19,7 @@ class _StockViewWidgetState extends State<StockViewWidget> {
       appBar: AppBar(
         // backgroundColor: FlutterFlowTheme.primaryColor,
         automaticallyImplyLeading: true,
-        title: const Text(
-          'Stock View',
-         
-        ),
+        title: const Text('Stock View', style: TextStyle(fontSize: 24)),
         actions: [
           IconButton(
             // borderColor: Colors.transparent,
@@ -60,7 +56,7 @@ class _StockViewWidgetState extends State<StockViewWidget> {
         centerTitle: true,
         elevation: 4,
       ),
-      backgroundColor: const Color(0xFFF5F5F5),
+      // backgroundColor: const Color(0xFFF5F5F5),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
@@ -75,7 +71,8 @@ class _StockViewWidgetState extends State<StockViewWidget> {
                   Align(
                     alignment: const AlignmentDirectional(0, 0),
                     child: Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                       child: Material(
                         color: Colors.transparent,
                         elevation: 12,
@@ -102,11 +99,9 @@ class _StockViewWidgetState extends State<StockViewWidget> {
                   ),
                   const Text(
                     'Stock Title',
-                   
                   ),
                   const Text(
                     'Project --',
-                   
                   ),
                 ],
               ),
@@ -116,69 +111,53 @@ class _StockViewWidgetState extends State<StockViewWidget> {
                 children: const [
                   Text(
                     'Stock Description',
-                   
                   ),
                   Text(
                     'Project --',
-                   
                   ),
                 ],
               ),
               const Text(
                 'Stock Condition',
-               
               ),
               const Text(
                 'Project --',
-               
               ),
               const Text(
                 'Stock Cost',
-               
               ),
               const Text(
                 'Project --',
-               
               ),
               const Text(
                 'Stock Creation Date',
-               
               ),
               const Text(
                 'Project --',
-               
               ),
               const Text(
                 'Stock Purchase Date',
-               
               ),
               const Text(
                 'Project --',
-               
               ),
               const Text(
                 'Stock Purchase Source',
-               
               ),
               const Text(
                 'Project --',
-               
               ),
               const Text(
                 'Stock Quantity',
-               
               ),
               const Text(
                 'Project --',
-               
               ),
               const Text(
                 'Stock Attachments',
-               
               ),
               const Text(
                 'Project --',
-               
               ),
             ],
           ),

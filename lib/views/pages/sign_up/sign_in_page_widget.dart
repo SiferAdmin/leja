@@ -282,11 +282,11 @@ class SignInState extends State<SignIn> {
                                                               obscureText:
                                                                   false,
                                                               decoration:
-                                                                  InputDecoration(
+                                                                  const InputDecoration(
                                                                 labelText:
                                                                     'Email Address',
                                                                 labelStyle:
-                                                                    const TextStyle(
+                                                                    TextStyle(
                                                                   fontFamily:
                                                                       'Lexend Deca',
                                                                   // color: Color(0xFF95A1AC),
@@ -298,7 +298,7 @@ class SignInState extends State<SignIn> {
                                                                 hintText:
                                                                     'Enter your email here...',
                                                                 hintStyle:
-                                                                    const TextStyle(
+                                                                    TextStyle(
                                                                   fontFamily:
                                                                       'Lexend Deca',
                                                                   // color: Color(0xFF95A1AC),
@@ -652,11 +652,11 @@ class SignInState extends State<SignIn> {
                                                               obscureText:
                                                                   false,
                                                               decoration:
-                                                                  InputDecoration(
+                                                                  const InputDecoration(
                                                                 labelText:
                                                                     'Email Address',
                                                                 labelStyle:
-                                                                    const TextStyle(
+                                                                    TextStyle(
                                                                   fontFamily:
                                                                       'Lexend Deca',
                                                                   // color: Color(0xFF95A1AC),
@@ -668,7 +668,7 @@ class SignInState extends State<SignIn> {
                                                                 hintText:
                                                                     'Enter your email here...',
                                                                 hintStyle:
-                                                                    const TextStyle(
+                                                                    TextStyle(
                                                                   fontFamily:
                                                                       'Lexend Deca',
                                                                   // color: Color(0xFF95A1AC),
