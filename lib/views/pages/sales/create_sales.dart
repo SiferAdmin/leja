@@ -1,4 +1,6 @@
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:easy_debounce/easy_debounce.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,6 +20,18 @@ class _CreateSalesWidgetState extends State<CreateSalesWidget> {
   TextEditingController? textController5;
   TextEditingController? textController6;
   TextEditingController? textController7;
+  String dropDownValue1 = 'Select Payment Status';
+  String dropDownValue2 = 'Select Payment Mode';
+    String valueChanged1 = '';
+    final TextEditingController _controller1 =
+      TextEditingController(text: DateTime.now().toString());
+
+  DateTime selectedDate = DateTime.now();
+
+  DateFormat format = DateFormat("dd.MM.yyyy");
+  String valueToValidate1 = '';
+
+  String valueSaved1 = '';
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -209,11 +223,51 @@ class _CreateSalesWidgetState extends State<CreateSalesWidget> {
                   'Lexend Deca',
                 ),
               ),
-              Container(
-                width: 100,
-                height: 20,
-                decoration: const BoxDecoration(),
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                child: TextFormField(
+                  onChanged: (_) => EasyDebounce.debounce(
+                    'priceController',
+                    const Duration(milliseconds: 2000),
+                    () => setState(() {}),
+                  ),
+                  controller: textController4,
+                  obscureText: false,
+                  decoration: InputDecoration(
+                    labelText: 'Product Price',
+                    labelStyle: GoogleFonts.getFont(
+                      'Lexend Deca',
+                    ),
+                    hintText: 'Enter Product price..',
+                    hintStyle: GoogleFonts.getFont(
+                      'Lexend Deca',
+                    ),
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    filled: true,
+                    prefixIcon: const FaIcon(
+                      FontAwesomeIcons.adjust,
+                    ),
+                    suffixIcon: textController5!.text.isNotEmpty
+                        ? InkWell(
+                            onTap: () => setState(
+                              () => textController4!.clear(),
+                            ),
+                            child: const Icon(
+                              Icons.clear,
+                              color: Color(0xFF757575),
+                              size: 22,
+                            ),
+                          )
+                        : null,
+                  ),
+                  style: GoogleFonts.getFont(
+                    'Lexend Deca',
+                  ),
+                  keyboardType: TextInputType.number,
+                ),
               ),
+
               Text(
                 'Product Units Sold',
                 style: GoogleFonts.getFont(
@@ -374,10 +428,35 @@ class _CreateSalesWidgetState extends State<CreateSalesWidget> {
                   'Lexend Deca',
                 ),
               ),
-              Container(
-                width: 100,
-                height: 20,
-                decoration: const BoxDecoration(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: DateTimePicker(
+                  type: DateTimePickerType.dateTimeSeparate,
+                  dateMask: 'd MMM, yyyy',
+                  controller: _controller1,
+
+                  // initialValue: 'q',
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2100), initialDate: selectedDate,
+                  icon: const Icon(Icons.event),
+                  dateLabelText: 'Date',
+                  timeLabelText: "Hour",
+                  use24HourFormat: false,
+                  //locale: Locale('pt', 'BR'),
+                  // selectableDayPredicate: (date) {
+                  //   if (date.weekday == 6 || date.weekday == 7) {
+                  //     return false;
+                  //   }
+                  //   return true;
+                  // },
+                  onChanged: (val) => setState(() => valueChanged1 = val),
+                  validator: (val) {
+                    setState(() => valueToValidate1 = val ?? '');
+                    // setState(() => newDate = DateTime.parse(val!));
+                    return null;
+                  },
+                  onSaved: (val) => setState(() => valueSaved1 = val ?? ''),
+                ),
               ),
               Text(
                 'Amount Paid',
@@ -431,22 +510,43 @@ class _CreateSalesWidgetState extends State<CreateSalesWidget> {
                   keyboardType: TextInputType.number,
                 ),
               ),
-              Text(
-                'Sale Attachments',
-                style: GoogleFonts.getFont(
-                  'Lexend Deca',
-                ),
-              ),
-              Container(
-                width: 100,
-                height: 20,
-                decoration: const BoxDecoration(),
-              ),
+              // Text(
+              //   'Sale Attachments',
+              //   style: GoogleFonts.getFont(
+              //     'Lexend Deca',
+              //   ),
+              // ),
+              // Container(
+              //   width: 100,
+              //   height: 20,
+              //   decoration: const BoxDecoration(),
+              // ),
               Text(
                 'Payment Status',
                 style: GoogleFonts.getFont(
                   'Lexend Deca',
                 ),
+              ),
+              DropdownButton(
+                items: <String>[
+                  'Complete',
+                  'Pending',
+                  'Refunded',
+                  'Failed',
+                  'Abandoled',
+                  'Revoked',
+                  'Cancelled',
+                ].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                hint: Text(dropDownValue1),
+                onChanged: (val) =>
+                    setState(() => dropDownValue1 = val.toString()),
+                elevation: 2,
+                // value: dropDownValue1,
               ),
               Text(
                 'Payment Mode',
@@ -454,10 +554,25 @@ class _CreateSalesWidgetState extends State<CreateSalesWidget> {
                   'Lexend Deca',
                 ),
               ),
-              Container(
-                width: 100,
-                height: 20,
-                decoration: const BoxDecoration(),
+              DropdownButton(
+                items: <String>[
+                  'Cash',
+                  'Checks',
+                  'Mpesa',
+                  'Bank Transfer',
+                  'Barter',
+                  'Other',
+                ].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                hint: Text(dropDownValue2),
+                onChanged: (val) =>
+                    setState(() => dropDownValue2 = val.toString()),
+                elevation: 2,
+                // value: dropDownValue1,
               ),
               ElevatedButton(
                 onPressed: () {

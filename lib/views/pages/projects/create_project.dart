@@ -1,10 +1,10 @@
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:leja/main.dart';
 import 'package:leja/services/date/utils.dart';
-import 'package:leja/views/pages/projects/create_project_task.dart';
-import 'package:leja/views/pages/projects/tasks_dashboard.dart';
 
 class CreateProject extends StatefulWidget {
   const CreateProject({Key? key}) : super(key: key);
@@ -26,6 +26,25 @@ class _HomePageWidgetState extends State<CreateProject> {
   late DateTime fromDate;
   late DateTime toDate;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  TextEditingController _controller1 =
+      TextEditingController(text: DateTime.now().toString());
+  // ignore: unused_field
+  late TextEditingController _controller2;
+  // ignore: unused_field
+  late TextEditingController _controller3;
+  // ignore: unused_field
+  String _valueToValidate1 = '';
+  // ignore: unused_field
+  String _valueSaved1 = '';
+  // ignore: unused_field
+  final DateTime _initialValue = DateTime.now();
+  late final DateTime newDate;
+  bool isChecked = false;
+  String valueChanged1 = '';
+
+  DateTime selectedDate = DateTime.now();
+
+  DateFormat format = DateFormat("dd.MM.yyyy");
 
   @override
   void initState() {
@@ -35,6 +54,7 @@ class _HomePageWidgetState extends State<CreateProject> {
     textController3 = TextEditingController();
     textController4 = TextEditingController();
     textController5 = TextEditingController();
+    _controller1 = TextEditingController(text: DateTime.now().toString());
 
     fromDate = DateTime.now();
     toDate = DateTime.now().add(const Duration(hours: 2));
@@ -379,75 +399,131 @@ class _HomePageWidgetState extends State<CreateProject> {
                   // ),
                 ],
               ),
-              const Text(
-                'Tasks',
-                // style: FlutterFlowTheme.bodyText1,
-              ),
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    const Text(
-                      '4',
-                      // style: FlutterFlowTheme.bodyText1,
-                    ),
-                    IconButton(
-                      // borderColor: Colors.transparent,
-                      // borderRadius: 30,
-                      // borderWidth: 1,
-                      // buttonSize: 60,
-                      icon: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: FaIcon(
-                          FontAwesomeIcons.handHoldingWater,
-                          color: bright == Brightness.light
-                              ? const Color(0xFFF687D4)
-                              : Colors.pink,
-                          size: 30,
-                        ),
-                      ),
-                      onPressed: () {
-                        // print('IconButton pressed ...');
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const TasksDashboard()));
-                      },
-                    ),
-                    IconButton(
-                      // borderColor: Colors.transparent,
-                      // borderRadius: 30,
-                      // borderWidth: 1,
-                      // buttonSize: 60,
-                      icon: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: FaIcon(
-                          FontAwesomeIcons.solidPlusSquare,
-                          color: bright == Brightness.light
-                              ? const Color(0xFFF687D4)
-                              : Colors.pink,
-                          size: 30,
-                        ),
-                      ),
-                      onPressed: () {
-                        // print('IconButton pressed ...');
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const CreateProjectTask()));
-                      },
-                    ),
-                  ],
-                ),
-              ),
+
+              // Padding(
+              //   padding: const EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+              //   child: Row(
+              //     mainAxisSize: MainAxisSize.max,
+              //     children: [
+              //       const Text(
+              //         '4',
+              //         // style: FlutterFlowTheme.bodyText1,
+              //       ),
+              //       IconButton(
+              //         // borderColor: Colors.transparent,
+              //         // borderRadius: 30,
+              //         // borderWidth: 1,
+              //         // buttonSize: 60,
+              //         icon: Padding(
+              //           padding: const EdgeInsets.all(8.0),
+              //           child: FaIcon(
+              //             FontAwesomeIcons.handHoldingWater,
+              //             color: bright == Brightness.light
+              //                 ? const Color(0xFFF687D4)
+              //                 : Colors.pink,
+              //             size: 30,
+              //           ),
+              //         ),
+              //         onPressed: () {
+              //           // print('IconButton pressed ...');
+              //           Navigator.of(context).push(MaterialPageRoute(
+              //               builder: (context) => const TasksDashboard()));
+              //         },
+              //       ),
+              //       IconButton(
+              //         // borderColor: Colors.transparent,
+              //         // borderRadius: 30,
+              //         // borderWidth: 1,
+              //         // buttonSize: 60,
+              //         icon: Padding(
+              //           padding: const EdgeInsets.all(8.0),
+              //           child: FaIcon(
+              //             FontAwesomeIcons.solidPlusSquare,
+              //             color: bright == Brightness.light
+              //                 ? const Color(0xFFF687D4)
+              //                 : Colors.pink,
+              //             size: 30,
+              //           ),
+              //         ),
+              //         onPressed: () {
+              //           // print('IconButton pressed ...');
+              //           Navigator.of(context).push(MaterialPageRoute(
+              //               builder: (context) => const CreateProjectTask()));
+              //         },
+              //       ),
+              //     ],
+              //   ),
+              // ),
+
               const Text(
                 'Start Date & Time',
                 // style: FlutterFlowTheme.bodyText1,
               ),
-              buildDateTimePickers(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: DateTimePicker(
+                  type: DateTimePickerType.dateTimeSeparate,
+                  dateMask: 'd MMM, yyyy',
+                  controller: _controller1,
+
+                  // initialValue: 'q',
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2100), initialDate: selectedDate,
+                  icon: const Icon(Icons.event),
+                  dateLabelText: 'Date',
+                  timeLabelText: "Hour",
+                  use24HourFormat: false,
+                  //locale: Locale('pt', 'BR'),
+                  // selectableDayPredicate: (date) {
+                  //   if (date.weekday == 6 || date.weekday == 7) {
+                  //     return false;
+                  //   }
+                  //   return true;
+                  // },
+                  onChanged: (val) => setState(() => valueChanged1 = val),
+                  validator: (val) {
+                    setState(() => _valueToValidate1 = val ?? '');
+                    // setState(() => newDate = DateTime.parse(val!));
+                    return null;
+                  },
+                  onSaved: (val) => setState(() => _valueSaved1 = val ?? ''),
+                ),
+              ),
 
               const Text(
                 'Deadline',
                 // style: FlutterFlowTheme.bodyText1,
               ),
-              buildTo(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: DateTimePicker(
+                  type: DateTimePickerType.dateTimeSeparate,
+                  dateMask: 'd MMM, yyyy',
+                  controller: _controller1,
+                  // initialValue: 'q',
+                  firstDate: selectedDate,
+                  lastDate: DateTime(2100),
+                  initialDate: selectedDate,
+                  icon: const Icon(Icons.event),
+                  dateLabelText: 'Date',
+                  timeLabelText: "Hour",
+                  use24HourFormat: false,
+                  //locale: Locale('pt', 'BR'),
+                  // selectableDayPredicate: (date) {
+                  //   if (date.isAfter(selectedDate)||date.isBefore(DateTime(2050))) {
+                  //     return false;
+                  //   }
+                  //   return true;
+                  // },
+
+                  onChanged: (val) => setState(() => valueChanged1 = val),
+                  validator: (val) {
+                    setState(() => _valueToValidate1 = val ?? '');
+                    return null;
+                  },
+                  onSaved: (val) => setState(() => _valueSaved1 = val ?? ''),
+                ),
+              ),
               const Text(
                 'Progress',
                 // style: FlutterFlowTheme.bodyText1,
@@ -464,53 +540,54 @@ class _HomePageWidgetState extends State<CreateProject> {
                   setState(() => sliderValue = newValue);
                 },
               ),
-              const Text(
-                'Attachments/Documents & Pictures',
-                // style: FlutterFlowTheme.bodyText1,
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  IconButton(
-                    // borderColor: Colors.transparent,
-                    // borderRadius: 30,
-                    // borderWidth: 1,
-                    // buttonSize: 60,
-                    icon: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: FaIcon(
-                        FontAwesomeIcons.artstation,
-                        color: bright == Brightness.light
-                            ? const Color(0xFFF687D4)
-                            : Colors.pink,
-                        size: 30,
-                      ),
-                    ),
-                    onPressed: () {
-                      // print('IconButton pressed ...');
-                    },
-                  ),
-                  IconButton(
-                    // borderColor: Colors.transparent,
-                    // borderRadius: 30,
-                    // borderWidth: 1,
-                    // buttonSize: 60,
-                    icon: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: FaIcon(
-                        FontAwesomeIcons.cameraRetro,
-                        color: bright == Brightness.light
-                            ? const Color(0xFFF687D4)
-                            : Colors.pink,
-                        size: 30,
-                      ),
-                    ),
-                    onPressed: () {
-                      // print('IconButton pressed ...');
-                    },
-                  ),
-                ],
-              ),
+              // const Text(
+              //   'Attachments/Documents & Pictures',
+              //   // style: FlutterFlowTheme.bodyText1,
+              // ),
+              // Row(
+              //   mainAxisSize: MainAxisSize.max,
+              //   children: [
+              //     IconButton(
+              //       // borderColor: Colors.transparent,
+              //       // borderRadius: 30,
+              //       // borderWidth: 1,
+              //       // buttonSize: 60,
+              //       icon: Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: FaIcon(
+              //           FontAwesomeIcons.artstation,
+              //           color: bright == Brightness.light
+              //               ? const Color(0xFFF687D4)
+              //               : Colors.pink,
+              //           size: 30,
+              //         ),
+              //       ),
+              //       onPressed: () {
+              //         // print('IconButton pressed ...');
+              //       },
+              //     ),
+              //     IconButton(
+              //       // borderColor: Colors.transparent,
+              //       // borderRadius: 30,
+              //       // borderWidth: 1,
+              //       // buttonSize: 60,
+              //       icon: Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: FaIcon(
+              //           FontAwesomeIcons.cameraRetro,
+              //           color: bright == Brightness.light
+              //               ? const Color(0xFFF687D4)
+              //               : Colors.pink,
+              //           size: 30,
+              //         ),
+              //       ),
+              //       onPressed: () {
+              //         // print('IconButton pressed ...');
+              //       },
+              //     ),
+              //   ],
+              // ),
+
               const Text(
                 'Assigned To',
                 // style: FlutterFlowTheme.bodyText1,

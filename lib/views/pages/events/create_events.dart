@@ -21,8 +21,11 @@ class _CreateEventState extends State<CreateEvent> {
   TextEditingController? textController6;
   TextEditingController? textController7;
   late TextEditingController _controller1;
+  // ignore: unused_field
   late TextEditingController _controller2;
+  // ignore: unused_field
   late TextEditingController _controller3;
+  // ignore: unused_field
   late TextEditingController _controller4;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
@@ -54,6 +57,7 @@ class _CreateEventState extends State<CreateEvent> {
   final String _valueSaved4 = '';
 
   String? eventTitle;
+  // ignore: unused_field
   final DateTime _initialValue = DateTime.now();
   late final DateTime newDate ;
   bool isChecked = false;

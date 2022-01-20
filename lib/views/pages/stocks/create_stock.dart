@@ -1,7 +1,9 @@
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class CreateStockWidget extends StatefulWidget {
   const CreateStockWidget({Key? key}) : super(key: key);
@@ -15,8 +17,22 @@ class _CreateStockWidgetState extends State<CreateStockWidget> {
   TextEditingController? textController2;
   TextEditingController? textController3;
   int countControllerValue = 1;
+  TextEditingController? textController5;
   TextEditingController? textController4;
+  TextEditingController? textController6;
+  final TextEditingController _controller1 =
+      TextEditingController(text: DateTime.now().toString());
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  String dropDownValue1 = 'Select Item Condition';
+  String valueChanged1 = '';
+
+  DateTime selectedDate = DateTime.now();
+
+  DateFormat format = DateFormat("dd.MM.yyyy");
+  String valueToValidate1 = '';
+
+  String valueSaved1 = '';
 
   @override
   void initState() {
@@ -25,6 +41,8 @@ class _CreateStockWidgetState extends State<CreateStockWidget> {
     textController2 = TextEditingController();
     textController3 = TextEditingController();
     textController4 = TextEditingController();
+    textController5 = TextEditingController();
+    textController6 = TextEditingController();
   }
 
   @override
@@ -194,64 +212,133 @@ class _CreateStockWidgetState extends State<CreateStockWidget> {
               const Text(
                 'Item Quantity',
               ),
-              // Padding(
-              //   padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
-              //   child: Container(
-              //     width: 160,
-              //     height: 50,
-              //     decoration: BoxDecoration(
-              //       gradient: LinearGradient(
-              //         colors: [Colors.red, Color(0xFF46FF00)],
-              //         stops: [0, 1],
-              //         begin: AlignmentDirectional(-1, 0),
-              //         end: AlignmentDirectional(1, 0),
-              //       ),
-              //       borderRadius: BorderRadius.circular(25),
-              //       shape: BoxShape.rectangle,
-              //       border: Border.all(
-              //         width: 1,
-              //       ),
-              //     ),
-              //     child: FlutterFlowCountController(
-              //       decrementIconBuilder: (enabled) => FaIcon(
-              //         FontAwesomeIcons.minus,
-              //         color: enabled ? Color(0xDD950F0F) : Color(0xFFEEEEEE),
-              //         size: 20,
-              //       ),
-              //       incrementIconBuilder: (enabled) => FaIcon(
-              //         FontAwesomeIcons.plus,
-              //         color: enabled ? Colors.green : Color(0xFFEEEEEE),
-              //         size: 20,
-              //       ),
-              //       countBuilder: (count) => Text(
-              //         count.toString(),
-              //         style: GoogleFonts.getFont(
-              //           'Lexend Deca',
-              //           color: Colors.green,
-              //           fontWeight: FontWeight.w600,
-              //           fontSize: 16,
-              //         ),
-              //       ),
-              //       count: countControllerValue ??= 1,
-              //       updateCount: (count) =>
-              //           setState(() => countControllerValue = count),
-              //       stepSize: 1,
-              //       minimum: 1,
-              //     ),
-              //   ),
-              // ),
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                child: TextFormField(
+                  onChanged: (_) => EasyDebounce.debounce(
+                    'quantityController',
+                    const Duration(milliseconds: 2000),
+                    () => setState(() {}),
+                  ),
+                  controller: textController4,
+                  obscureText: false,
+                  decoration: InputDecoration(
+                    labelText: 'Item Quantity',
+                    labelStyle: GoogleFonts.getFont(
+                      'Lexend Deca',
+                    ),
+                    hintText: 'Enter Item quantity..',
+                    hintStyle: GoogleFonts.getFont(
+                      'Lexend Deca',
+                    ),
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    filled: true,
+                    prefixIcon: const FaIcon(
+                      FontAwesomeIcons.adjust,
+                    ),
+                    suffixIcon: textController4!.text.isNotEmpty
+                        ? InkWell(
+                            onTap: () => setState(
+                              () => textController4!.clear(),
+                            ),
+                            child: const Icon(
+                              Icons.clear,
+                              color: Color(0xFF757575),
+                              size: 22,
+                            ),
+                          )
+                        : null,
+                  ),
+                  style: GoogleFonts.getFont(
+                    'Lexend Deca',
+                  ),
+                  keyboardType: TextInputType.number,
+                ),
+              ),
 
               const Text(
                 'Item Purchase Date',
               ),
-              Container(
-                width: 100,
-                height: 20,
-                decoration: const BoxDecoration(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: DateTimePicker(
+                  type: DateTimePickerType.dateTimeSeparate,
+                  dateMask: 'd MMM, yyyy',
+                  controller: _controller1,
+
+                  // initialValue: 'q',
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2100), initialDate: selectedDate,
+                  icon: const Icon(Icons.event),
+                  dateLabelText: 'Date',
+                  timeLabelText: "Hour",
+                  use24HourFormat: false,
+                  //locale: Locale('pt', 'BR'),
+                  // selectableDayPredicate: (date) {
+                  //   if (date.weekday == 6 || date.weekday == 7) {
+                  //     return false;
+                  //   }
+                  //   return true;
+                  // },
+                  onChanged: (val) => setState(() => valueChanged1 = val),
+                  validator: (val) {
+                    setState(() => valueToValidate1 = val ?? '');
+                    // setState(() => newDate = DateTime.parse(val!));
+                    return null;
+                  },
+                  onSaved: (val) => setState(() => valueSaved1 = val ?? ''),
+                ),
               ),
+
               const Text(
                 'Item Purchase Price',
               ),
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                child: TextFormField(
+                  onChanged: (_) => EasyDebounce.debounce(
+                    'priceController',
+                    const Duration(milliseconds: 2000),
+                    () => setState(() {}),
+                  ),
+                  controller: textController4,
+                  obscureText: false,
+                  decoration: InputDecoration(
+                    labelText: 'Item Price',
+                    labelStyle: GoogleFonts.getFont(
+                      'Lexend Deca',
+                    ),
+                    hintText: 'Enter Item price..',
+                    hintStyle: GoogleFonts.getFont(
+                      'Lexend Deca',
+                    ),
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    filled: true,
+                    prefixIcon: const FaIcon(
+                      FontAwesomeIcons.adjust,
+                    ),
+                    suffixIcon: textController5!.text.isNotEmpty
+                        ? InkWell(
+                            onTap: () => setState(
+                              () => textController4!.clear(),
+                            ),
+                            child: const Icon(
+                              Icons.clear,
+                              color: Color(0xFF757575),
+                              size: 22,
+                            ),
+                          )
+                        : null,
+                  ),
+                  style: GoogleFonts.getFont(
+                    'Lexend Deca',
+                  ),
+                  keyboardType: TextInputType.number,
+                ),
+              ),
+
               Container(
                 width: 100,
                 height: 20,
@@ -304,9 +391,10 @@ class _CreateStockWidgetState extends State<CreateStockWidget> {
                   keyboardType: TextInputType.name,
                 ),
               ),
-              const Text(
-                'Item Photo',
-              ),
+
+              // const Text(
+              //   'Item Photo',
+              // ),
               Container(
                 width: 100,
                 height: 20,
@@ -315,10 +403,24 @@ class _CreateStockWidgetState extends State<CreateStockWidget> {
               const Text(
                 'Item Condition',
               ),
-              Container(
-                width: 100,
-                height: 20,
-                decoration: const BoxDecoration(),
+              DropdownButton(
+                items: <String>[
+                  'New',
+                  'Available',
+                  'Good',
+                  'Bad',
+                  'Running Out',
+                ].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                hint: Text(dropDownValue1),
+                onChanged: (val) =>
+                    setState(() => dropDownValue1 = val.toString()),
+                elevation: 2,
+                // value: dropDownValue1,
               ),
               ElevatedButton(
                 onPressed: () {
