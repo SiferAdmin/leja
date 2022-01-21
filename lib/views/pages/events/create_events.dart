@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_time_picker/date_time_picker.dart';
-import 'package:easy_debounce/easy_debounce.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -24,11 +23,15 @@ class _CreateEventState extends State<CreateEvent> {
   TextEditingController? textController7;
   late TextEditingController _controller1;
   late TextEditingController _controller2;
+  // ignore: unused_field
   String _valueChanged1 = '';
   String _valueToValidate1 = '';
+  // ignore: unused_field
   String _valueSaved1 = '';
+  // ignore: unused_field
   String _valueChanged2 = '';
   String _valueToValidate2 = '';
+  // ignore: unused_field
   String _valueSaved2 = '';
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -80,7 +83,9 @@ class _CreateEventState extends State<CreateEvent> {
     _controller2 = TextEditingController(text: DateTime.now().toString());
     //_initialValue = DateTime.now().toString();
 
+    // ignore: unused_local_variable
     String lsHour = TimeOfDay.now().hour.toString().padLeft(2, '0');
+    // ignore: unused_local_variable
     String lsMinute = TimeOfDay.now().minute.toString().padLeft(2, '0');
     // _controller4 = TextEditingController(text: '$lsHour:$lsMinute');
 

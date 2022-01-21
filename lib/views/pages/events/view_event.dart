@@ -40,7 +40,7 @@ class _ViewEventState extends State<ViewEvent> {
             onPressed: () {
               Navigator.of(context)
                   .push(MaterialPageRoute(
-                      builder: (context) => const EditEvent()))
+                      builder: (context) => EditEvent(eventDoc: 'doc',)))
                   .then((value) {});
             },
           ),
