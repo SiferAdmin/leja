@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:easy_debounce/easy_debounce.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class CreateEvent extends StatefulWidget {
   const CreateEvent({Key? key}) : super(key: key);
@@ -21,12 +23,14 @@ class _CreateEventState extends State<CreateEvent> {
   TextEditingController? textController6;
   TextEditingController? textController7;
   late TextEditingController _controller1;
-  // ignore: unused_field
   late TextEditingController _controller2;
-  // ignore: unused_field
-  late TextEditingController _controller3;
-  // ignore: unused_field
-  late TextEditingController _controller4;
+  String _valueChanged1 = '';
+  String _valueToValidate1 = '';
+  String _valueSaved1 = '';
+  String _valueChanged2 = '';
+  String _valueToValidate2 = '';
+  String _valueSaved2 = '';
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
 
@@ -34,15 +38,7 @@ class _CreateEventState extends State<CreateEvent> {
   String valueChanged1 = '';
   DateTime now = DateTime.now();
   // ignore: unused_field
-  String _valueToValidate1 = '';
-  // ignore: unused_field
-  String _valueSaved1 = '';
-  // ignore: unused_field
-  final String _valueChanged2 = '';
-  // ignore: unused_field
-  final String _valueToValidate2 = '';
-  // ignore: unused_field
-  final String _valueSaved2 = '';
+
   // ignore: unused_field
   final String _valueChanged3 = '';
   // ignore: unused_field
@@ -57,18 +53,21 @@ class _CreateEventState extends State<CreateEvent> {
   final String _valueSaved4 = '';
 
   String? eventTitle;
+  String? eventDesc;
   // ignore: unused_field
   final DateTime _initialValue = DateTime.now();
-  late final DateTime newDate ;
+  late final DateTime newDate;
+  late final DateTime toDate;
   bool isChecked = false;
 
-  DateTime selectedDate=DateTime.now();
+  DateTime selectedDate = DateTime.now();
 
   DateFormat format = DateFormat("dd.MM.yyyy");
 
   @override
   void initState() {
     super.initState();
+    Intl.defaultLocale = 'en_US';
     textController1 = TextEditingController();
     textController2 = TextEditingController();
     textController3 = TextEditingController();
@@ -77,15 +76,13 @@ class _CreateEventState extends State<CreateEvent> {
     textController5 = TextEditingController(text: '0');
     textController6 = TextEditingController();
     textController7 = TextEditingController(text: '0');
-    Intl.defaultLocale = 'pt_BR';
-    //_initialValue = DateTime.now().toString();
     _controller1 = TextEditingController(text: DateTime.now().toString());
     _controller2 = TextEditingController(text: DateTime.now().toString());
-    _controller3 = TextEditingController(text: DateTime.now().toString());
+    //_initialValue = DateTime.now().toString();
 
     String lsHour = TimeOfDay.now().hour.toString().padLeft(2, '0');
     String lsMinute = TimeOfDay.now().minute.toString().padLeft(2, '0');
-    _controller4 = TextEditingController(text: '$lsHour:$lsMinute');
+    // _controller4 = TextEditingController(text: '$lsHour:$lsMinute');
 
     // _getValue();
   }
@@ -143,17 +140,19 @@ class _CreateEventState extends State<CreateEvent> {
                       ),
                       const Text('FROM'),
                       DateTimePicker(
-                        type: DateTimePickerType.dateTimeSeparate,
-                        dateMask: 'd MMM, yyyy',
+                        type: DateTimePickerType.dateTime,
+                        dateMask: 'd MMMM, yyyy - hh:mm a',
                         controller: _controller1,
-                        
+
                         // initialValue: 'q',
                         firstDate: DateTime(2000),
-                        lastDate: DateTime(2100), initialDate: selectedDate,
+                        lastDate: DateTime(2100),
+                        //  initialDate: selectedDate,
                         icon: const Icon(Icons.event),
-                        dateLabelText: 'Date',
-                        timeLabelText: "Hour",
+                        dateLabelText: 'Date Time',
+                        // timeLabelText: "Hour",
                         use24HourFormat: false,
+                        locale: const Locale('en', 'US'),
                         //locale: Locale('pt', 'BR'),
                         // selectableDayPredicate: (date) {
                         //   if (date.weekday == 6 || date.weekday == 7) {
@@ -161,7 +160,8 @@ class _CreateEventState extends State<CreateEvent> {
                         //   }
                         //   return true;
                         // },
-                        onChanged: (val) => setState(() => valueChanged1 = val),
+                        onChanged: (val) =>
+                            setState(() => _valueChanged1 = val),
                         validator: (val) {
                           setState(() => _valueToValidate1 = val ?? '');
                           // setState(() => newDate = DateTime.parse(val!));
@@ -171,19 +171,19 @@ class _CreateEventState extends State<CreateEvent> {
                             setState(() => _valueSaved1 = val ?? ''),
                       ),
                       const Text('TO'),
-                      
                       DateTimePicker(
-                        type: DateTimePickerType.dateTimeSeparate,
-                        dateMask: 'd MMM, yyyy',
-                        controller: _controller1,
+                        type: DateTimePickerType.dateTime,
+                        dateMask: 'd MMMM, yyyy - hh:mm a',
+                        controller: _controller2,
                         // initialValue: 'q',
-                        firstDate: selectedDate,
-                        lastDate: DateTime(2100), 
-                        initialDate: selectedDate,
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime(2100),
+                        // initialDate: selectedDate,
                         icon: const Icon(Icons.event),
-                        dateLabelText: 'Date',
-                        timeLabelText: "Hour",
+                        dateLabelText: 'Date Time',
+                        // timeLabelText: "Hour",
                         use24HourFormat: false,
+                        locale: const Locale('en', 'US'),
                         //locale: Locale('pt', 'BR'),
                         // selectableDayPredicate: (date) {
                         //   if (date.isAfter(selectedDate)||date.isBefore(DateTime(2050))) {
@@ -191,14 +191,15 @@ class _CreateEventState extends State<CreateEvent> {
                         //   }
                         //   return true;
                         // },
-                        
-                        onChanged: (val) => setState(() => valueChanged1 = val),
+
+                        onChanged: (val) =>
+                            setState(() => _valueChanged2 = val),
                         validator: (val) {
-                          setState(() => _valueToValidate1 = val ?? '');
+                          setState(() => _valueToValidate2 = val ?? '');
                           return null;
                         },
                         onSaved: (val) =>
-                            setState(() => _valueSaved1 = val ?? ''),
+                            setState(() => _valueSaved2 = val ?? ''),
                       ),
                       Row(
                         children: [
@@ -213,12 +214,19 @@ class _CreateEventState extends State<CreateEvent> {
                         ],
                       ),
                       TextFormField(
-                        onChanged: (_) => EasyDebounce.debounce(
-                          'textController3',
-                          const Duration(milliseconds: 2000),
-                          () => setState(() {}),
-                        ),
+                        
                         controller: textController3,
+                         validator: (desc) =>
+            desc != null && desc.isEmpty ? 'Title cannot be empty' : null,
+        onSaved: (value) {
+          setState(() {
+            eventDesc = value!;
+          });
+        },
+        onChanged: (value) {
+          eventDesc = value;
+        },
+        onFieldSubmitted: (_) => saveForm(),
                         obscureText: false,
                         decoration: InputDecoration(
                           labelText: 'Event Description',
@@ -332,7 +340,24 @@ class _CreateEventState extends State<CreateEvent> {
       //     isAllDay: false);
       // final provider=Provider.of<EventProvider>(context,listen: );
       // provider.addEvent(event);
+      createEvent();
       Navigator.of(context).pop();
     }
+  }
+
+  void createEvent() async {
+    CollectionReference ref = FirebaseFirestore.instance
+        .collection('UserData')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('Events');
+    var data = {
+      'created': DateTime.now(),
+      'title': eventTitle,
+      'allDay': isChecked,
+      'desc':eventDesc,
+      'from': DateTime.parse(_valueToValidate1),
+      'to': DateTime.parse(_valueToValidate2),
+    };
+    ref.add(data);
   }
 }
